@@ -6,7 +6,7 @@ from django.forms.widgets import NumberInput
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
     BirthDate = forms.DateField(label='Birth Date', widget=NumberInput(attrs={'type':'date'}))
-    PhoneNo = forms.IntegerField(label='Phone Number' ,max_value=10, min_value=10)
+    PhoneNo = forms.CharField(label='Phone Number', max_length=12, min_length=9)
 
     class Meta:
         model = User
