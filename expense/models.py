@@ -8,8 +8,8 @@ class BudgetTypeMaster(models.Model):
     BudgetMaster = models.BigAutoField(primary_key=True)
     BudgetType = models.CharField(max_length=20, blank=False)
     def __str__(self):
-        return self.BudgetMaster
-
+        return f'{self.BudgetType} of {self.User.username}' 
+    
 class Budget(models.Model):
     Budget_id = models.BigAutoField(primary_key=True)
     User_id = models.ForeignKey(Users, on_delete=models.CASCADE)
@@ -19,7 +19,7 @@ class Budget(models.Model):
     UpdatedAt = models.DateTimeField(blank=False, default=now)
     DeletedAt = models.DateTimeField(blank=False, default=now)
     def __str__(self):
-        return self.Budget_id 
+        return f'{self.Budget_id} of {self.Users.Username}'
 
 class IncomeCategories(models.Model):
     IncomeCatId = models.BigAutoField(primary_key=True)
@@ -28,20 +28,20 @@ class IncomeCategories(models.Model):
     UpdatedAt = models.DateTimeField(blank=False, default=now)
     DeletedAt = models.DateTimeField(blank=False, default=now)
     def __str__(self):
-        return self.IncomeCatId
+        return f'{self.IncomeType} of {self.Users.Username}'
 
 class Income(models.Model):
     income_id = models.BigAutoField(primary_key=True)
     User_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     Amount = models.IntegerField(unique=True, blank=False)
     IncomeDate = models.DateTimeField(blank=False)
-    IncomeImage = models.ImageField(upload_to='income_pics')
+    IncomeImage = models.ImageField(upload_to='income_pics', blank=True)
     IncomeCatId = models.ForeignKey(IncomeCategories, on_delete=models.CASCADE)
     CreatedAt = models.DateTimeField(blank=False, default=now)
     UpdatedAt = models.DateTimeField(blank=False, default=now)
     DeletedAt = models.DateTimeField(blank=False, default=now)
     def __str__(self):
-        return self.income_id
+        return f'{self.income_id} of {self.Users.Username}'
 
 class ExpenseCategories(models.Model):
     ExpenseCatId = models.BigAutoField(primary_key=True)
@@ -49,20 +49,18 @@ class ExpenseCategories(models.Model):
     CreatedAt = models.DateTimeField(blank=False, default=now)
     UpdatedAt = models.DateTimeField(blank=False, default=now)
     DeletedAt = models.DateTimeField(blank=False, default=now)
-    
     def __str__(self):
-        return self.ExpenseCatId
+        return f'{self.ExpenseType} of {self.Users.Username}'
 
 class Expense(models.Model):
     Expense_id = models.BigAutoField(primary_key=True)
     User_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     Amount = models.IntegerField(unique=True, null=False)
     ExpenseDate = models.DateTimeField(null=False)
-    ExpenseImage = models.ImageField(upload_to='expense_pics')
+    ExpenseImage = models.ImageField(upload_to='expense_pics', blank=True)
     ExpenseCatId = models.ForeignKey(ExpenseCategories, on_delete=models.CASCADE)
     CreatedAt = models.DateTimeField(null=False, default=now)
     UpdatedAt = models.DateTimeField(null=False, default=now)
     DeletedAt = models.DateTimeField(null=False, default=now)
-
     def __str__(self):
-        return self.Expense_id
+        return f'{self.Expense_id} of {self.Users.Username}'
