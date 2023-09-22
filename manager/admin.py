@@ -1,3 +1,9 @@
 from django.contrib import admin
-
-# Register your models here.
+from .models import BudgetTypeMaster, Budget, ExpenseCategories, Expense, Income, IncomeCategories
+ 
+admin.site.register(BudgetTypeMaster)
+admin.site.register(Budget)
+admin.site.register(IncomeCategories)
+admin.site.register(Income)
+admin.site.register(ExpenseCategories)
+admin.site.register(Expense)

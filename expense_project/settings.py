@@ -33,9 +33,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'manager.apps.ManagerConfig',
     'users.apps.UsersConfig',
-    'expense.apps.ExpenseConfig',
     'crispy_forms',
     'crispy_bootstrap4',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -135,3 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+LOGIN_REDIRECT_URL = 'manager-home'
+LOGIN_URL = 'login'
+
+LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_URL = 'logout'
