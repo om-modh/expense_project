@@ -1,6 +1,5 @@
 from django.db import models
 from users.models import User
-from expense_project.settings import TIME_ZONE
  
 class BudgetTypeMaster(models.Model):
     BudgetMaster = models.BigAutoField(primary_key=True)

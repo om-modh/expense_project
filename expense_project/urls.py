@@ -22,8 +22,6 @@ from users import views as user_views
 from manager import views as manager_views
 from django.conf.urls.static import static
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', user_views.register.register, name = 'register'),
