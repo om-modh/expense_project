@@ -2,6 +2,7 @@ from django import forms
 from django.forms.widgets import NumberInput
 from .models import Income, Expense
 
+
 class UserIncomeForm(forms.Form):
     INCOME_CHOICES= [
     ('salary', 'Salary'),
@@ -19,16 +20,17 @@ class UserIncomeForm(forms.Form):
 
 class UserExpenseForm(forms.Form):
     EXPENSE_CHOICES= [
-    ('necessity', 'Necessity'),
-    ('desire', 'Desire'),
-    ('investment', 'Investment')
+    ('1', 'Necessity'),
+    ('2', 'Desire'),
+    ('3', 'Investment')
     ]
+    id = forms.IntegerField(widget=forms.HiddenInput())
     expense_amount = forms.IntegerField(label='Amount')
     expense_date = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
     expense_image = forms.ImageField(label='Image', required=False)
-    expense_category = forms.CharField(label='Category', widget=forms.Select(choices=EXPENSE_CHOICES))
+    expenseCatId = forms.IntegerField(label='Category', widget=forms.Select(choices=EXPENSE_CHOICES))
 
     class Meta:
         model = Expense
-        fields = ['expense_amount', 'expense_date', 'expense_image', 'expense_category']
+        fields = ['id', 'expense_amount', 'expense_date', 'expense_image', 'expense']
 
