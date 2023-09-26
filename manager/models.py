@@ -32,7 +32,7 @@ class IncomeCategories(models.Model):
 class Income(models.Model):
     income_id = models.BigAutoField(primary_key=True)
     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    Amount = models.IntegerField(unique=True, blank=False)
+    Amount = models.IntegerField(blank=False)
     IncomeDate = models.DateTimeField(blank=False)
     IncomeImage = models.ImageField(upload_to='income_pics/', blank=True)
     IncomeCatId = models.ForeignKey(IncomeCategories, on_delete=models.CASCADE)
@@ -55,8 +55,8 @@ class Income(models.Model):
 
 class Expense(models.Model):
     Expense_id = models.BigAutoField(primary_key=True)
-    id = models.ForeignKey(User, on_delete=models.CASCADE)
-    Amount = models.IntegerField(unique=True, null=False)
+    User_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    Amount = models.IntegerField(null=False)
     ExpenseDate = models.DateTimeField(null=False)
     ExpenseImage = models.ImageField(upload_to='expense_pics/', blank=True)
     ExpenseCatId = models.IntegerField(null = False, unique = False)

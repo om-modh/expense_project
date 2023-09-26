@@ -1,7 +1,12 @@
 {% extends "manager/layout.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
+<div class="row">
+    <div class="col-md-7">
+        
+    </div>
+    <div class="col-md-5">
+        <div class="input-section">
         <form method="post">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -12,5 +17,7 @@
                 <button class="btn btn-outline-info" type="submit">Submit</button>
             </div>
         </form>
+        </div>
     </div>
-{% endblock %}
+</div>
+{% endblock content%}
