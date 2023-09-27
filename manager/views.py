@@ -40,7 +40,7 @@ def expense(request):
     if request.method == 'POST':
         form = UserExpenseForm(request.POST)
         if form.is_valid():
-            user_id = request.user  
+            user_id = request.user
             amount = form.cleaned_data['expense_amount']
             date = form.cleaned_data['expense_date']
             image = form.cleaned_data['expense_image']
