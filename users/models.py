@@ -6,7 +6,7 @@ from phone_field import PhoneField
 GENDER_CHOICES = (
     (0, 'Male'),
     (1, 'Female'),
-    (2, 'Not Specified')
+    (2, 'Not Specified'),
 )
 class UserDetail(models.Model):
     Users = models.OneToOneField(User, on_delete=models.CASCADE)
