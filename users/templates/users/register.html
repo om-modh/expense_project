@@ -1,145 +1,112 @@
 {% extends "manager/layout.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <!-- <div class="content-section">
-        <form method="post">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Register Today</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign up</button  >
-            </div>
-            </form>
-            <div class="border-top pt-3">
-                <small class="text-muted">
-                    Already have an Account? <a href="{% url 'login' %}" class="ml-2">Sign in</a>
-                </small>
-            </div>
-        </div>
-    </div> -->
+
+<div class="form">
+      
+    <ul class="tab-group">
+      <li class="tab active"><a href="#">Sign Up</a></li>
+      <li class="tab"><a href="#login">Log In</a></li>
+    </ul>
+    
+    <div class="tab-content">
+      <div id="signup">   
+        <h1>Sign Up for Free</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+      </div>
+      
+      <div id="login">   
+        <h1>Welcome Back!</h1>
+        {{ form.as_p }}
+      </div>
+      
+    </div><!-- tab-content -->
+    
+</div> <!-- /form -->
+{% endblock content %}
 
 
 
-
-
-
-
-
-
-
-
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-          <div class="row justify-content-center align-items-center h-100">
-            <div class="col-12 col-lg-9 col-xl-7">
-              <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                <div class="card-body p-4 p-md-5">
-                  <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-                  <form>
+<!--https://codepen.io/ehermanson/pen/KwKWEv
+https://www.templatemonster.com/blog/html5-css3-registration-forms/?utm_source=eSputnik&utm_medium=email&utm_campaign=com_newsletter_2_oct_2018&utm_content=159493427&utm_term=october%2Cnewsletter-->
+<div class="form">
       
-                    <div class="row">
-                      <div class="col-md-6 mb-4">
+    <ul class="tab-group">
+      <li class="tab active"><a href="#signup">Sign Up</a></li>
+      <li class="tab"><a href="#login">Log In</a></li>
+    </ul>
+    
+    <div class="tab-content">
+      <div id="signup">   
+        <h1>Sign Up for Free</h1>
+        
+        <form action="/" method="post">
+        
+        <div class="top-row">
+          <div class="field-wrap">
+            <label>
+              First Name<span class="req">*</span>
+            </label>
+            <input type="text" required autocomplete="off" />
+          </div>
       
-                        <div class="form-outline">
-                          <input type="text" id="first_name" class="form-control form-control-lg" placeholder="First Name" />
-                          <label class="form-label" for="first_name">First Name</label>
-                        </div>
-      
-                      </div>
-                      <div class="col-md-6 mb-4">
-      
-                        <div class="form-outline">
-                          <input type="text" id="last_name" class="form-control form-control-lg" placeholder="Last Name" />
-                          <label class="form-label" for="last_name">Last Name</label>
-                        </div>
-      
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-4">    
-                        <div class="form-outline">
-                          <input type="text" id="username" class="form-control form-control-lg" placeholder="Username" />
-                          <label class="form-label" for="username" required>Username</label>
-                        </div>
-                    </div>
-      
-                    <div class="row">
-                      <div class="col-md-6 mb-4 d-flex align-items-center">
-      
-                        <div class="form-outline datepicker w-100">
-                          <input type="date-local" class="form-control form-control-lg" id="DateOfBirth" />
-                          <label for="DateOfBirth" class="form-label">Birth Date</label>
-                        </div>
-      
-                      </div>
-                      <div class="col-md-6 mb-4">
-      
-                        <h6 class="mb-2 pb-1">Gender: </h6>
-      
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                            value="option1" checked />
-                          <label class="form-check-label" for="gender">Male</label>
-                        </div>
-      
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                            value="option2" />
-                          <label class="form-check-label" for="gender">Female</label>
-                        </div>
-      
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                            value="option3" />
-                          <label class="form-check-label" for="gender">Not specified</label>
-                        </div>
-      
-                      </div>
-                    </div>
-      
-                    <div class="row">
-                      <div class="col-md-6 mb-4 pb-2">
-      
-                        <div class="form-outline">
-                          <input type="email" id="email" class="form-control form-control-lg" placeholder="Email" />
-                          <label class="form-label" for="email">Email</label>
-                        </div>
-      
-                      </div>
-                      <div class="col-md-6 mb-4 pb-2">
-      
-                        <div class="form-outline">
-                          <input type="tel" id="PhoneNo" class="form-control form-control-lg" placeholder="Phone Number" />
-                          <label class="form-label" for="PhoneNo">Phone Number</label>
-                        </div>
-      
-                      </div>
-                    </div>
-      
-                    <!-- <div class="row">
-                      <div class="col-12">
-      
-                        <select class="select form-control-lg">
-                          <option value="1" disabled>Choose option</option>
-                          <option value="2">Subject 1</option>
-                          <option value="3">Subject 2</option>
-                          <option value="4">Subject 3</option>
-                        </select>
-                        <label class="form-label select-label">Choose option</label>
-      
-                      </div>
-                    </div> -->
-      
-                    <div class="mt-4 pt-2">
-                      <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
-                    </div>
-      
-                  </form>
-                </div>
-              </div>
-            </div>
+          <div class="field-wrap">
+            <label>
+              Last Name<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off"/>
           </div>
         </div>
-      </section>
-{% endblock content %}
+
+        <div class="field-wrap">
+          <label>
+            Email Address<span class="req">*</span>
+          </label>
+          <input type="email"required autocomplete="off"/>
+        </div>
+        
+        <div class="field-wrap">
+          <label>
+            Set A Password<span class="req">*</span>
+          </label>
+          <input type="password"required autocomplete="off"/>
+        </div>
+        
+        <button type="submit" class="button button-block"/>Get Started</button>
+        
+        </form>
+
+      </div>
+      
+      <div id="login">   
+        <h1>Welcome Back!</h1>
+        
+        <form action="/" method="post">
+        
+          <div class="field-wrap">
+          <label>
+            Email Address<span class="req">*</span>
+          </label>
+          <input type="email"required autocomplete="off"/>
+        </div>
+        
+        <div class="field-wrap">
+          <label>
+            Password<span class="req">*</span>
+          </label>
+          <input type="password"required autocomplete="off"/>
+        </div>
+        
+        <p class="forgot"><a href="#">Forgot Password?</a></p>
+        
+        <button class="button button-block"/>Log In</button>
+        
+        </form>
+
+      </div>
+      
+    </div><!-- tab-content -->
+    
+</div> <!-- /form -->
