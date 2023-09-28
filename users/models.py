@@ -6,14 +6,14 @@ from phone_field import PhoneField
 GENDER_CHOICES = (
     (0, 'Male'),
     (1, 'Female'),
-    (2, 'Not Specified'),
+    (2, 'Not Specified')
 )
-class UserProfile(models.Model):
+class UserDetail(models.Model):
     Users = models.OneToOneField(User, on_delete=models.CASCADE)
     FirstName = models.CharField(max_length=25, blank=False)
     LastName = models.CharField(max_length=25)
     Username = models.CharField(max_length=30, unique=True, null=False)
-    Gender = models.IntegerField(choices=GENDER_CHOICES)    
+    gender = models.IntegerField(choices=GENDER_CHOICES)    
     Email = models.EmailField(max_length=120, unique=True)
     BirthDate = models.DateField()
     PhoneNumber = PhoneField(blank=True)
