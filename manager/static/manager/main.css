@@ -1,5 +1,4 @@
 body {
-    background: #fafafa;
     color: #333333;
     margin-top: 5rem;
 }
@@ -111,7 +110,7 @@ a.article-title:hover {
 
 .subscribe-button{
     background-color: rgb(200, 0, 0);
-    color: white;
+    color: rgb(0, 0, 0);
     border: none;
     padding-top: 10px;
     padding-bottom: 10px;
