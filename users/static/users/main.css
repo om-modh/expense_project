@@ -9,19 +9,19 @@
 }
 
 html, body {
-    height: 100%;
+    height: 80%;
+    margin-top: 35px !important;
     background-color: #152733;
-    overflow: hidden;
 }
 
 
 .form-holder {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* min-height: 100vh; */
 }
 
 .form-holder .form-content {
@@ -146,4 +146,13 @@ html, body {
 
 .valid-feedback{
    color: #2acc80;
+}
+
+.form-section {
+    background: #ffffff;
+    padding: 15px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    width: 700px;
+    margin: auto;
 }
