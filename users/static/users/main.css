@@ -156,3 +156,9 @@ html, body {
     width: 700px;
     margin: auto;
 }
+
+.message-pop-up{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

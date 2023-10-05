@@ -9,7 +9,7 @@ class UserIncomeForm(forms.Form):
     ('cash', 'Cash'),
     ('divident', 'Divident'),
     ]
-    income_amount = forms.IntegerField(label='Amount')
+    income_amount = forms.IntegerField(label='Amount', widget=NumberInput(attrs={'placeholder':'Amount'}))
     income_date = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
     income_image = forms.ImageField(label='Image', required=False)
     income_category = forms.CharField(label='Category', widget=forms.Select(choices=INCOME_CHOICES))
@@ -18,19 +18,19 @@ class UserIncomeForm(forms.Form):
         model = Income
         fields = ['income_amount', 'income_date', 'income_image', 'income_category']
 
-class UserExpenseForm(forms.Form):
+class UserExpenseForm(forms.ModelForm):
     EXPENSE_CHOICES= [
     ('1', 'Necessity'),
     ('2', 'Desire'),
     ('3', 'Investment')
     ]
-    id = forms.IntegerField(widget=forms.HiddenInput())
-    expense_amount = forms.IntegerField(label='Amount')
-    expense_date = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
-    expense_image = forms.ImageField(label='Image', required=False)
-    expenseCatId = forms.IntegerField(label='Category', widget=forms.Select(choices=EXPENSE_CHOICES))
+    # id = forms.IntegerField(widget=forms.HiddenInput())
+    Amount = forms.IntegerField(label='Amount', widget=NumberInput(attrs={'placeholder':'Amount'}))
+    ExpenseDate = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
+    ExpenseImage = forms.ImageField(label='Image', required=False)
+    ExpenseCatId = forms.IntegerField(label='Category', widget=forms.Select(choices=EXPENSE_CHOICES))
 
     class Meta:
         model = Expense
-        fields = ['id', 'expense_amount', 'expense_date', 'expense_image', 'expense']
+        fields = ['Amount', 'ExpenseDate', 'ExpenseImage', 'ExpenseCatId']
 
