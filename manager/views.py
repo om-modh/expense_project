@@ -4,7 +4,6 @@ from .serializers import ExpenseSerializer
 from .forms import UserExpenseForm, UserIncomeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Expense
 
 
 @login_required
@@ -16,10 +15,19 @@ def about(request):
 
 @login_required
 def income(request):
-    form = UserIncomeForm()
-    if form.is_valid():
-        messages.success(request, f'Your income data is added Successfully!')
-    return render(request, 'manager/income.html', {'form' : form})
+    if request.method == 'POST':            
+        form = UserIncomeForm(request.POST)
+        if form.is_valid():
+            form.instance.User_id = request.user
+            form.save()
+            messages.success(request, f'Your income data is added Successfully!')
+            return redirect('manager-income')
+    else:
+        form = UserIncomeForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'manager/income.html', context)
 
 @login_required
 def expense(request):

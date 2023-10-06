@@ -21,6 +21,53 @@ class Budget(models.Model):
     def __str__(self):
         return f'{self.Budget_id} of {self.User_id.username}'
 
+
+class Income(models.Model):
+    Income_id = models.BigAutoField(primary_key=True)
+    User_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    Amount = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    IncomeDate = models.DateTimeField(default=timezone.now())
+    IncomeImage = models.ImageField(upload_to='static/manager/income_pics/', blank=True, null=True)
+    IncomeCatId = models.IntegerField()
+    CreatedAt = models.DateTimeField(auto_now=True)
+    UpdatedAt = models.DateTimeField(auto_now=True)
+    DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
+
+    def soft_delete(self):
+        self.DeletedAt = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return f'Income {self.pk} by {self.User_id.username}'
+
+    
+class Expense(models.Model):
+    # Use the default AutoField for primary key
+    Expense_id = models.BigAutoField(primary_key=True)
+    User_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    Amount = models.DecimalField(blank=False, max_digits=10, decimal_places=2)  # Use DecimalField for currency amounts
+    ExpenseDate = models.DateTimeField(default=timezone.now())
+    ExpenseImage = models.ImageField(upload_to='static/manager/expense_pics/', blank=True, null=True)  # Use null=True
+    ExpenseCatId = models.IntegerField()  # Use the appropriate field type (ForeignKey or IntegerField)
+    CreatedAt = models.DateTimeField(auto_now_add=True)  # Use auto_now_add for creation timestamp
+    UpdatedAt = models.DateTimeField(auto_now=True)
+    DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
+
+    def soft_delete(self):
+        self.DeletedAt = timezone.now()
+        self.save()
+    
+    def __str__(self):
+        return f'Expense {self.pk} by {self.User_id.username}'
+
+
+
+
+
+
+
+
+
 # class IncomeCategories(models.Model):
 #     IncomeCatId = models.BigAutoField(primary_key=True)
 #     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,18 +78,6 @@ class Budget(models.Model):
 #     def __str__(self):
 #         return f'{self.IncomeType} of {self.User_id.username}'
 
-class Income(models.Model):
-    income_id = models.BigAutoField(primary_key=True)
-    User_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    Amount = models.IntegerField(unique=True, blank=False)
-    IncomeDate = models.DateTimeField(blank=False)
-    IncomeImage = models.ImageField(upload_to='income_pics/', blank=True)
-    IncomeCatId = models.IntegerField()
-    CreatedAt = models.DateTimeField(auto_now=True)
-    UpdatedAt = models.DateTimeField(auto_now=True)
-    DeletedAt = models.DateTimeField(auto_now=True)
-    def __str__(self):
-        return f'{self.income_id} of {self.User_id.username}'
 
 # class ExpenseCategories(models.Model):
 #     ExpenseCatId = models.BigAutoField(primary_key=True)
@@ -67,22 +102,3 @@ class Income(models.Model):
 #     DeletedAt = models.DateTimeField(auto_now=True)
 #     def __str__(self):
 #         return f'Expense {self.pk} by {self.User_id.username}'
-    
-class Expense(models.Model):
-    # Use the default AutoField for primary key
-    Expense_id = models.BigAutoField(primary_key=True)
-    User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    Amount = models.DecimalField(max_digits=10, decimal_places=2)  # Use DecimalField for currency amounts
-    ExpenseDate = models.DateTimeField()
-    ExpenseImage = models.ImageField(upload_to='static/manager/expense_pics/', blank=True, null=True)  # Use null=True
-    ExpenseCatId = models.IntegerField()  # Use the appropriate field type (ForeignKey or IntegerField)
-    CreatedAt = models.DateTimeField(auto_now_add=True)  # Use auto_now_add for creation timestamp
-    UpdatedAt = models.DateTimeField(auto_now=True)
-    DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
-
-    def soft_delete(self):
-        self.DeletedAt = timezone.now()
-        self.save()
-    
-    def __str__(self):
-        return f'Expense {self.pk} by {self.User_id.username}'

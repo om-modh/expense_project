@@ -129,8 +129,23 @@ a.article-title:hover {
 .subscribe-button:active{
     opacity: 0.5;
 }
+.alert-box{
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center;
+}
+
+.alert-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 63%;
+}
+
 .justify-content-center{
     display: flex !important;
+    flex-direction: column;
     justify-content: center !important;
     width: 500px;
 }

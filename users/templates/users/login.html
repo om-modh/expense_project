@@ -1,15 +1,16 @@
 {% extends "manager/layout.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-        {% if messages %}
-            {% for message in messages %}
-            <div>
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        </div>
-            {% endfor %}
-        {% endif %}
+<div class="alert-box">
+    {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-message">
+              {{ message }}
+          </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+<div class="row">
     <div class="form-section">
         <form method="post">
             {% csrf_token %}
@@ -27,4 +28,5 @@
             </small>
         </div>
     </div>
+</div>
 {% endblock %}

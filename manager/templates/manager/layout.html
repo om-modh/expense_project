@@ -47,12 +47,15 @@
             </nav>
         </header>
         <main role="main" class="container">
-            <div class="row">
+          <div class="row">
+            {% block form %}{% endblock form %}
+          </div>
 
-              {% block content %}
 
-              {% endblock content %}
-            </div>
+          {% block content %}
+
+          {% endblock content %}
+            
         </main>
         
         <!-- Optional JavaScript -->

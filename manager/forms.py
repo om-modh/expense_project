@@ -3,20 +3,20 @@ from django.forms.widgets import NumberInput
 from .models import Income, Expense
 
 
-class UserIncomeForm(forms.Form):
+class UserIncomeForm(forms.ModelForm):
     INCOME_CHOICES= [
-    ('salary', 'Salary'),
-    ('cash', 'Cash'),
-    ('divident', 'Divident'),
+    ('1', 'Salary'),
+    ('2', 'Cash'),
+    ('3', 'Divident'),
     ]
-    income_amount = forms.IntegerField(label='Amount', widget=NumberInput(attrs={'placeholder':'Amount'}))
-    income_date = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
-    income_image = forms.ImageField(label='Image', required=False)
-    income_category = forms.CharField(label='Category', widget=forms.Select(choices=INCOME_CHOICES))
+    Amount = forms.IntegerField(label='Amount', widget=NumberInput(attrs={'placeholder':'Amount'}))
+    IncomeDate = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
+    IncomeImage = forms.ImageField(label='Image', required=False)
+    IncomeCatId = forms.IntegerField(label='Category', widget=forms.Select(choices=INCOME_CHOICES))
 
     class Meta:
         model = Income
-        fields = ['income_amount', 'income_date', 'income_image', 'income_category']
+        fields = ['Amount', 'IncomeDate', 'IncomeImage', 'IncomeCatId']
 
 class UserExpenseForm(forms.ModelForm):
     EXPENSE_CHOICES= [
