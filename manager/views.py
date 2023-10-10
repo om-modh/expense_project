@@ -33,10 +33,8 @@ def income(request):
 def expense(request):
     if request.method == 'POST':
         form = UserExpenseForm(request.POST)
-        print("-------------------------------------------------------------------")
         if form.is_valid():
             form.instance.User_id = request.user
-            print("yesssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
             form.save()
             messages.success(request, f'Your expense data is added Successfully!')
             return redirect('manager-expense')

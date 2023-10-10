@@ -1,7 +1,8 @@
 from django import forms
-from django.forms import widgets
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -15,3 +16,7 @@ class UserRegistrationForm(UserCreationForm):
         widgets = {
             'username' : forms.TextInput(attrs={'placeholder' : 'Username'}),
         }
+
+class PlaceholderAuthForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
