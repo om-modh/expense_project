@@ -4,11 +4,23 @@ from .serializers import ExpenseSerializer
 from .forms import UserExpenseForm, UserIncomeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from .models import Expense, Income
 
 @login_required
 def home(request):
-    return render(request, 'manager/home.html')
+    expenses = Income.objects.all()
+    data = {
+        # "labels": [expense.IncomeDate.strftime('%d') for expense in expenses],
+        "labels": ['a', 'b', 'c'],
+     
+        "values": [int(expense.Amount) for expense in expenses],
+    }
+    # data = {
+    #     "labels": json.dumps(["Label1", "Label2", "Label3"]),
+    #     "values": json.dumps([10, 20, 30])
+    # }
+    return render(request, "manager/home.html", {'data':data})
+
 
 def about(request):
     return render(request, 'manager/about.html', {'title' : 'about'})

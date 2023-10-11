@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 
-
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=200, widget=forms.EmailInput(attrs={'placeholder':'Email Address'}))
     password1 = forms.CharField(max_length=16, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
