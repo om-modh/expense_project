@@ -5,21 +5,28 @@ from .forms import UserExpenseForm, UserIncomeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
+from django.db.models import Sum
 
 @login_required
 def home(request):
-    expenses = Income.objects.all()
-    data = {
-        # "labels": [expense.IncomeDate.strftime('%d') for expense in expenses],
-        "labels": ['a', 'b', 'c'],
-     
-        "values": [int(expense.Amount) for expense in expenses],
+    labels = []
+    money = []
+    user = request.user
+    # queryset = Expense.objects.filter(User_id = user).order_by('ExpenseDate')
+    temp = Expense.objects.values('ExpenseDate').annotate(total_amount=Sum('Amount')).filter(User_id=user)
+    expenseGraph = {item['ExpenseDate']:item['total_amount'] for item in temp}
+    # stringDate = expenseGraph.keys().strftime("%d-%m-%Y")
+    # labels.append(stringDate)
+    # money.append(expenseGraph.values())
+    # print(labels)
+    # print(money)
+    print(expenseGraph)
+    context = {
+        'labels': labels,
+        'money' : money
+
     }
-    # data = {
-    #     "labels": json.dumps(["Label1", "Label2", "Label3"]),
-    #     "values": json.dumps([10, 20, 30])
-    # }
-    return render(request, "manager/home.html", {'data':data})
+    return render(request, 'manager/home.html', context)
 
 
 def about(request):
