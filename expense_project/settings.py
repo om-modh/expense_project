@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'rest_framework',
     'django.contrib.admin',
-    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

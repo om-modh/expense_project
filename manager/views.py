@@ -1,32 +1,12 @@
-from rest_framework import generics
 from django.shortcuts import render, redirect
-from .serializers import ExpenseSerializer
 from .forms import UserExpenseForm, UserIncomeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
-from django.db.models import Sum
 
 @login_required
 def home(request):
-    labels = []
-    money = []
-    user = request.user
-    # queryset = Expense.objects.filter(User_id = user).order_by('ExpenseDate')
-    temp = Expense.objects.values('ExpenseDate').annotate(total_amount=Sum('Amount')).filter(User_id=user)
-    expenseGraph = {item['ExpenseDate']:item['total_amount'] for item in temp}
-    # stringDate = expenseGraph.keys().strftime("%d-%m-%Y")
-    # labels.append(stringDate)
-    # money.append(expenseGraph.values())
-    # print(labels)
-    # print(money)
-    print(expenseGraph)
-    context = {
-        'labels': labels,
-        'money' : money
-
-    }
-    return render(request, 'manager/home.html', context)
+    return render(request, 'manager/home.html')
 
 
 def about(request):
@@ -34,7 +14,28 @@ def about(request):
 
 @login_required
 def income(request):
-    if request.method == 'POST':            
+    formatted_dates = []
+    money = []
+    user = request.user
+    queryset = Income.objects.filter(User_id = user).order_by('IncomeDate')
+    
+    for query in queryset:
+        formatted_date = query.IncomeDate.strftime("%d-%m-%Y")
+        formatted_dates.append(formatted_date)
+        amount = query.Amount
+        money.append(amount)
+
+    for i in range(0, len(formatted_dates)-1):
+        if formatted_dates[i] == formatted_dates[i+1]:
+            money[i] = money[i] + money[i+1]
+            del money[i+1]
+    
+    unique_formatted_dates = []
+    for date in formatted_dates:
+        if date not in unique_formatted_dates:
+            unique_formatted_dates.append(date)
+
+    if request.method == 'POST':
         form = UserIncomeForm(request.POST)
         if form.is_valid():
             form.instance.User_id = request.user
@@ -44,12 +45,35 @@ def income(request):
     else:
         form = UserIncomeForm()
     context = {
+        'labels': unique_formatted_dates,
+        'money' : money,
         'form' : form
     }
     return render(request, 'manager/income.html', context)
 
 @login_required
 def expense(request):
+    formatted_dates = []
+    money = []
+    user = request.user
+    queryset = Expense.objects.filter(User_id = user).order_by('ExpenseDate')
+    
+    for query in queryset:
+        formatted_date = query.ExpenseDate.strftime("%d-%m-%Y")
+        formatted_dates.append(formatted_date)
+        amount = query.Amount
+        money.append(amount)
+
+    for i in range(0, len(formatted_dates)-1):
+        if formatted_dates[i] == formatted_dates[i+1]:
+            money[i] = money[i] + money[i+1]
+            del money[i+1]
+    
+    unique_formatted_dates = []
+    for date in formatted_dates:
+        if date not in unique_formatted_dates:
+            unique_formatted_dates.append(date)
+
     if request.method == 'POST':
         form = UserExpenseForm(request.POST)
         if form.is_valid():
@@ -60,6 +84,8 @@ def expense(request):
     else:
         form = UserExpenseForm()
     context = {
+        'labels': unique_formatted_dates,
+        'money' : money,
         'form' : form
     }
     return render(request, 'manager/expense.html', context)

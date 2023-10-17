@@ -1,74 +1,41 @@
 {% extends "manager/layout.html" %}
 {% block content %}
     <h1>Home</h1>
-    <style>
-      .chartMenu {
-        width: 100vw;
-        height: 40px;
-        background: #1A1A1A;
-      }
-      .chartMenu p {
-        padding: 10px;
-        font-size: 20px;
-      }
-      .chartCard {
-        width: 100vw;
-        height: calc(100vh - 40px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .chartBox {
-        width: 900px;
-        padding: 20px;
-        border-radius: 20px;
-        background: white;
-      }
-    </style>
-      <div class="chartBox">
-        <canvas id="myChart"></canvas>
-        <input onchange="filterData()" type="date" id="startdate">
-        <input onchange="filterData()" type="date" id="enddate"> 
-      </div>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-    <script>
-    // setup 
-    const date = {{labels|safe}};
-    const amount = {{money|safe}};
-    console.log({{labels|safe}});
-    console.log({{money}});
-    const data = {
-      labels: date,
-      datasets: [{
-        label: 'Weekly Expense',
-        data: amount,
-        borderWidth: 1
-      }]
-    };
-
-    // config 
-    const config = {
-      type: 'bar',
-      data,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    };
-
-    // render init block
-    const myChart = new Chart(
-      document.getElementById('myChart'),
-      config
-    );
-
-    // Instantly assign Chart.js version
-    const chartVersion = document.getElementById('chartVersion');
-    chartVersion.innerText = Chart.version;
-    </script>
-
+    
+        {% comment %} <script>
+            // setup 
+            const data = {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: 'Expense',
+                    data: {{ money|safe }},
+                    borderWidth: 1
+                }]
+            };
+            
+            // config 
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            
+            // render init block
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+            
+            // Instantly assign Chart.js version
+            const chartVersion = document.getElementById('chartVersion');
+            chartVersion.innerText = Chart.version;
+            </script> {% endcomment %}
+        
       
 {% endblock content %}

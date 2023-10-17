@@ -33,7 +33,9 @@ ul {
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
-    width: 500px;
+    margin-top: 47px;
+    margin-left: 142px;
+    width: 350px;
 }
 
 .article-title {
@@ -147,5 +149,42 @@ a.article-title:hover {
     display: flex !important;
     flex-direction: column;
     justify-content: center !important;
-    width: 500px;
+    width: 350px;
+    margin-left: 142px;
+}
+
+.chartMenu {
+    width: 100vw;
+    height: 40px;
+    background: #1A1A1A;
+}
+.chartMenu p {
+    padding: 10px;
+    font-size: 20px;
+}
+.chartCard {
+    width: 100vw;
+    height: calc(100vh - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chartBox {
+    width: 900px;
+    padding: 20px;
+    border-radius: 20px;
+    background: white;
+}
+
+.margin-left-135px{
+    margin-left: -135px;
+    width: 900px;
+}
+
+canvas {
+    display: block;
+    box-sizing: border-box;
+    height: 497px;
+    width: 900px;
+    margin-left: -135px;
 }
