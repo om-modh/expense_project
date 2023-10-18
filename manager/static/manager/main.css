@@ -34,8 +34,8 @@ ul {
     border-radius: 3px;
     margin-bottom: 20px;
     margin-top: 47px;
-    margin-left: 142px;
-    width: 350px;
+    margin-left: 77px;
+    width: 377px;
 }
 
 .article-title {
@@ -149,8 +149,8 @@ a.article-title:hover {
     display: flex !important;
     flex-direction: column;
     justify-content: center !important;
-    width: 350px;
-    margin-left: 142px;
+    width: 377px;
+    margin-left: 77px;
 }
 
 .chartMenu {
@@ -170,10 +170,11 @@ a.article-title:hover {
     justify-content: center;
 }
 .chartBox {
-    width: 900px;
+    width: 890px;
     padding: 20px;
     border-radius: 20px;
     background: white;
+    margin-left: -104px;
 }
 
 .margin-left-135px{
@@ -181,10 +182,3 @@ a.article-title:hover {
     width: 900px;
 }
 
-canvas {
-    display: block;
-    box-sizing: border-box;
-    height: 497px;
-    width: 900px;
-    margin-left: -135px;
-}

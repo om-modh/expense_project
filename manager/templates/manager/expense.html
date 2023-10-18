@@ -3,16 +3,16 @@
 {% block form %}
     <div class="col-8">
         <div class="chartBox">
-            <canvas class="margin-left-135px" id="myExpenseChart" width="-135px" margin-left="142px"></canvas>
-            {% comment %} <input onchange="filterData()" type="date" id="startdate"> 
-            <input onchange="filterData()" type="date" id="enddate">  {% endcomment %}
+            <canvas id="myExpenseChart" width="300" height="175"></canvas>
+            <input onchange="filterData()" type="date" id="startdate"> 
+            <input onchange="filterData()" type="date" id="enddate"> 
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
         {% comment %} <script type="text/javascript" src="../../static/manager/expenseGraph.js"></script> {% endcomment %}
         <script>
             // setup 
-            const dates = {{labels|safe}};
-            const amount = {{money|safe}};
+            const dates = {{ labels|safe }};
+            const amount = {{ money|safe }};
             const data = {
                 labels: dates,
                 datasets: [{
@@ -41,7 +41,7 @@
                 config
             );
     
-            {% comment %} function filterData(){
+            function filterData(){
                 const dates2 = [...dates];
                 console.log(dates2);
                 const startdate = document.getElementById('startdate')
@@ -52,7 +52,7 @@
                 console.log(indexenddate)
                 const filterDate = dates2.slice(dates2.indexOf(startdate.value), dates2.indexOf(enddate.value)+1);
                 console.log(filterDate);
-            } {% endcomment %}
+            }
     
         </script>                       
     </div>

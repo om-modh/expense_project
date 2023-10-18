@@ -3,7 +3,7 @@
 {% block form %}
     <div class="col-8">
         <div class="chartBox">
-            <canvas class="margin-left-135px" id="myIncomeChart" width="-135px" margin-left="142px"></canvas>
+            <canvas id="myIncomeChart" width="300" height="175"></canvas>
             {% comment %} <input onchange="filterData()" type="date" id="startdate"> 
             <input onchange="filterData()" type="date" id="enddate">  {% endcomment %}
         </div>
@@ -58,11 +58,11 @@
     </div>
     <div class="col-4">
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} justify-content-center">
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} justify-content-center">
+            {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
         <div class="data-section">
             <form method="post">
