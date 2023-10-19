@@ -24,7 +24,6 @@ class UserExpenseForm(forms.ModelForm):
     ('2', 'Desire'),
     ('3', 'Investment')
     ]
-    # id = forms.IntegerField(widget=forms.HiddenInput())
     Amount = forms.IntegerField(label='Amount', widget=NumberInput(attrs={'placeholder':'Amount'}))
     ExpenseDate = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
     ExpenseImage = forms.ImageField(label='Image', required=False)

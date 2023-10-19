@@ -7,11 +7,8 @@ from datetime import datetime, timedelta
 
 @login_required
 def home(request):
-    return render(request, 'manager/home.html')
-
-
-def about(request):
-    return render(request, 'manager/about.html', {'title' : 'about'})
+    user = request.user
+    return render(request, 'manager/home.html', {'username' : user})
 
 @login_required
 def income(request):
@@ -46,6 +43,7 @@ def income(request):
     else:
         form = UserIncomeForm()
     context = {
+        'username' : user,
         'labels' : unique_formatted_dates,
         'money' : money,
         'form' : form
@@ -87,6 +85,7 @@ def expense(request):
     else:
         form = UserExpenseForm()
     context = {
+        'username' : user,
         'labels': unique_formatted_dates,
         'money' : money,
         'form' : form

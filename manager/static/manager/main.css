@@ -15,6 +15,14 @@ ul {
     background-color: #5f788a;
 }
 
+.site-header-fontsize {
+    font-size: 20px;
+}
+
+.site-header-ExpenseManager {
+    font-size: 25px;
+}
+
 .site-header .navbar-nav .nav-link {
     color: #cbd5db;
 }
@@ -36,6 +44,7 @@ ul {
     margin-top: 47px;
     margin-left: 77px;
     width: 377px;
+    position: fixed;
 }
 
 .article-title {
@@ -182,3 +191,30 @@ a.article-title:hover {
     width: 900px;
 }
 
+.box {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    margin-top: 47px;
+    margin-right: 25px;
+    width: 700px;
+    /* height: 50vh; */
+}
+
+::-webkit-scrollbar {
+    width: 1px !important;
+    height: 6px !important;
+    background-color: #c3ced5 !important;
+    /* Adjust the width as needed */
+}
+  /* Change the color of the scrollbar thumb (the draggable part) */  
+::-webkit-scrollbar-thumb {
+    background-color: #005287 !important;
+    /* Change this to your desired color */
+}
+  
+::-webkit-scrollbar:horizontal {  
+    width: 3px !important;
+}
