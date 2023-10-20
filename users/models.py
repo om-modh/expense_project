@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser, AbstractUser
-from phone_field import PhoneField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Profile(models.Model):
     GENDER_CHOICES = (
@@ -13,4 +11,7 @@ class Profile(models.Model):
     FirstName = models.CharField(max_length=25, blank=True)
     LastName = models.CharField(max_length=20, blank=True)
     Gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    PhoneNumber = models.PhoneNumberField(_(""))
+    PhoneNumber = PhoneNumberField(unique=True)
+
+    def __str__(self):
+        return f'{self.User_id.username} Profile'

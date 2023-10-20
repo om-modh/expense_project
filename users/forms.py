@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 # from .models import Profile
 
@@ -20,8 +21,8 @@ class PlaceholderAuthForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
 
-# class UserProfileUpdate(UserCreationForm):
-#     first_name = forms.CharField(max_length=25, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
+class UserProfileUpdate(forms.Form):
+    first_name = forms.CharField(max_length=25, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
     
-#     class Meta:
-#         model = Profile
+    class Meta:
+        model = Profile
