@@ -21,8 +21,15 @@ class PlaceholderAuthForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
 
-class UserProfileUpdate(forms.Form):
-    first_name = forms.CharField(max_length=25, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
-    
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        
+class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
+        fields = ['image']

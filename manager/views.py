@@ -3,6 +3,7 @@ from .forms import UserExpenseForm, UserIncomeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
+from django.views.generic import ListView, DetailView
 from datetime import datetime, timedelta
 
 @login_required
@@ -21,7 +22,7 @@ def income(request):
         formatted_date = query.IncomeDate.strftime("%d-%m-%Y")
         formatted_dates.append(formatted_date)
         amount = query.Amount
-        money.append(float(amount))
+        money.append(int(amount))
 
     for i in range(len(formatted_dates)-2, 0, -1):
         if formatted_dates[i] == formatted_dates[i+1]:
@@ -46,7 +47,8 @@ def income(request):
         'username' : user,
         'labels' : unique_formatted_dates,
         'money' : money,
-        'form' : form
+        'form' : form,
+        'incomes' : Income.objects.all()
     }
     return render(request, 'manager/income.html', context)
 
@@ -88,6 +90,9 @@ def expense(request):
         'username' : user,
         'labels': unique_formatted_dates,
         'money' : money,
-        'form' : form
+        'form' : form,
+        'expenses' : Expense.objects.all()
     }
     return render(request, 'manager/expense.html', context)
+
+

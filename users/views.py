@@ -1,24 +1,48 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm, UserProfileUpdate
+from .forms import UserRegistrationForm, ProfileUpdateForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import Profile
+
+# @login_required
+# def profile(request):
+#     user = request.user
+#     if request.method == 'POST':
+#         my_object = Profile.objects.get(user)
+#         form = ProfileUpdateForm(request.POST, instance = my_object)    
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f'Your Profile has been Updated!')
+#             return redirect('login')
+#     else:
+#         form = ProfileUpdateForm()
+        
+#     context = {
+#         'form' : form,
+#         'username' : user
+#     }
+#     return render(request, 'users/profile.html', context)
 
 @login_required
 def profile(request):
-    user = request.user
     if request.method == 'POST':
-        form = UserProfileUpdate(request.POST)    
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your Profile has been Updated!')
-            return redirect('login')
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profile')
+
     else:
-        form = UserProfileUpdate()
-        
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
     context = {
-        'form' : form,
-        'username' : user
+        'u_form': u_form,
+        'p_form': p_form
     }
+
     return render(request, 'users/profile.html', context)
 
 def register(request):

@@ -11,7 +11,22 @@
         <div class="box">
             <h1>History</h1>
             <hr>
-            <h2></h2> 
+                {% for expense in expenses %}
+                <article class="media content-section">
+                  <div class="media-body">
+                    <div class="article-metadata">
+                      {% comment %} <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a> {% endcomment %}
+                      <div class="h4 mb-0 mt-2"> Amount: 
+                      <a class="mr-4" href= "#">{{ expense.Amount }}</a>
+                      </div>
+                      <small class="h6 text-muted mb-3">{{ expense.ExpenseDate|date:"F d, Y" }}</small>
+                    </div>
+                    <hr>
+                    {% comment %} <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p> {% endcomment %}
+                  </div>
+                </article>
+            {% endfor %}
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
         {% comment %} <script type="text/javascript" src="../../static/manager/expenseGraph.js"></script> {% endcomment %}

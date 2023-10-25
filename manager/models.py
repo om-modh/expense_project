@@ -25,7 +25,7 @@ class Budget(models.Model):
 class Income(models.Model):
     Income_id = models.BigAutoField(primary_key=True)
     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    Amount = models.DecimalField(blank=False, max_digits=10, decimal_places=2)
+    Amount = models.IntegerField(blank=False, max_length=10)
     IncomeDate = models.DateTimeField(default=timezone.now())
     IncomeImage = models.ImageField(upload_to='static/manager/income_pics/', blank=True, null=True)
     IncomeCatId = models.IntegerField()
@@ -45,7 +45,7 @@ class Expense(models.Model):
     # Use the default AutoField for primary key
     Expense_id = models.BigAutoField(primary_key=True)
     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    Amount = models.DecimalField(blank=False, max_digits=10, decimal_places=2)  # Use DecimalField for currency amounts
+    Amount = models.IntegerField(blank=False, max_length=10)  # Use DecimalField for currency amounts
     ExpenseDate = models.DateTimeField(default=timezone.now())
     ExpenseImage = models.ImageField(upload_to='static/manager/expense_pics/', blank=True, null=True)  # Use null=True
     ExpenseCatId = models.IntegerField()  # Use the appropriate field type (ForeignKey or IntegerField)
