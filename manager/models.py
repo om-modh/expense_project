@@ -29,6 +29,7 @@ class Income(models.Model):
     IncomeDate = models.DateTimeField(default=timezone.now())
     IncomeImage = models.ImageField(upload_to='static/manager/income_pics/', blank=True, null=True)
     IncomeCatId = models.IntegerField()
+    IncomeNote = models.TextField(blank=True)
     CreatedAt = models.DateTimeField(auto_now=True)
     UpdatedAt = models.DateTimeField(auto_now=True)
     DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
@@ -49,6 +50,7 @@ class Expense(models.Model):
     ExpenseDate = models.DateTimeField(default=timezone.now())
     ExpenseImage = models.ImageField(upload_to='static/manager/expense_pics/', blank=True, null=True)  # Use null=True
     ExpenseCatId = models.IntegerField()  # Use the appropriate field type (ForeignKey or IntegerField)
+    ExpenseNote = models.TextField(blank=True)
     CreatedAt = models.DateTimeField(auto_now_add=True)  # Use auto_now_add for creation timestamp
     UpdatedAt = models.DateTimeField(auto_now=True)
     DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
@@ -62,43 +64,3 @@ class Expense(models.Model):
 
 
 
-
-
-
-
-
-
-# class IncomeCategories(models.Model):
-#     IncomeCatId = models.BigAutoField(primary_key=True)
-#     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     IncomeType = models.CharField(max_length=25, blank=False)
-#     CreatedAt = models.DateTimeField(auto_now=True)
-#     UpdatedAt = models.DateTimeField(auto_now=True)
-#     DeletedAt = models.DateTimeField(auto_now=True)
-#     def __str__(self):
-#         return f'{self.IncomeType} of {self.User_id.username}'
-
-
-# class ExpenseCategories(models.Model):
-#     ExpenseCatId = models.BigAutoField(primary_key=True)
-#     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     ExpenseType = models.CharField(max_length=25, blank=False)
-#     CreatedAt = models.DateTimeField(auto_now=True)
-#     UpdatedAt = models.DateTimeField(auto_now=True)
-#     DeletedAt = models.DateTimeField(auto_now=True)
-#     def __str__(self):
-#         return f'{self.ExpenseType} of {self.User_id.username}'
-    
-
-# class Expense(models.Model):
-#     # Expense_id = models.BigAutoField(primary_key=True)
-#     User_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     Amount = models.IntegerField(unique=True, null=False)
-#     ExpenseDate = models.DateTimeField(null=False)
-#     ExpenseImage = models.ImageField(upload_to='static/manager/expense_pics', blank=True)
-#     ExpenseCatId = models.IntegerField(null = False, unique = False)
-#     CreatedAt = models.DateTimeField(auto_now=True)
-#     UpdatedAt = models.DateTimeField(auto_now=True)
-#     DeletedAt = models.DateTimeField(auto_now=True)
-#     def __str__(self):
-#         return f'Expense {self.pk} by {self.User_id.username}'

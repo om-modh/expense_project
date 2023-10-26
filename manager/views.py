@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
 from django.views.generic import ListView, DetailView
 from datetime import datetime, timedelta
+from django.core.paginator import Paginator
 
 @login_required
 def home(request):
@@ -86,12 +87,17 @@ def expense(request):
             return redirect('manager-expense')
     else:
         form = UserExpenseForm()
+    
+    p = Paginator(Expense.objects.all(), 5)
+    page = request.GET.get('page')
+    expenses = p.get_page(page)
+
     context = {
         'username' : user,
         'labels': unique_formatted_dates,
         'money' : money,
         'form' : form,
-        'expenses' : Expense.objects.all()
+        'expenses' : expenses,
     }
     return render(request, 'manager/expense.html', context)
 
