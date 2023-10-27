@@ -41,7 +41,7 @@ ul {
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
-    margin-top: 47px;
+    margin-top: 35px;
     margin-left: 77px;
     width: 377px;
     position: fixed;
@@ -206,14 +206,27 @@ a.article-title:hover {
     width: 1px !important;
     height: 6px !important;
     background-color: #c3ced5 !important;
-    /* Adjust the width as needed */
+
 }
-  /* Change the color of the scrollbar thumb (the draggable part) */  
 ::-webkit-scrollbar-thumb {
     background-color: #005287 !important;
-    /* Change this to your desired color */
 }
   
 ::-webkit-scrollbar:horizontal {  
     width: 3px !important;
+}
+
+.page-link  {
+    position: relative ;
+    display: inline ;
+    padding: 0.5rem 0.75rem ; 
+    margin-left: 3px ;
+    line-height: 1.25 ;
+    color: #007bff ;
+    background-color: #fff ;
+    border: 1px solid #dee2e6;
+}
+
+.delete-button {
+    
 }

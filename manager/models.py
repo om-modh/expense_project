@@ -63,4 +63,3 @@ class Expense(models.Model):
         return f'Expense {self.pk} by {self.User_id.username}'
 
 
-

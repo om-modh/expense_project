@@ -35,3 +35,18 @@ class UserExpenseForm(forms.ModelForm):
         model = Expense
         fields = ['Amount', 'ExpenseDate', 'ExpenseImage', 'ExpenseCatId', 'ExpenseNote']
 
+class UpdateExpenseForm(forms.Form):
+    EXPENSE_CHOICES= [
+    ('1', 'Necessity'),
+    ('2', 'Desire'),
+    ('3', 'Investment')
+    ]
+    Amount = forms.IntegerField(label='Amount', widget=NumberInput(attrs={'placeholder':'Amount'}))
+    ExpenseDate = forms.DateTimeField(label='Date and Time', widget=NumberInput(attrs={'type':'datetime-local'}))
+    ExpenseImage = forms.ImageField(label='Image', required=False)
+    ExpenseCatId = forms.IntegerField(label='Category', widget=forms.Select(choices=EXPENSE_CHOICES))
+    ExpenseNote = forms.CharField(label='Note', required=False, widget=forms.TextInput(attrs={'placeholder': 'Type a Note.'}))
+
+    class Meta:
+        model = Expense
+        fields = ['Amount', 'ExpenseDate', 'ExpenseImage', 'ExpenseCatId', 'ExpenseNote']

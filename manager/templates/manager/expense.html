@@ -10,23 +10,57 @@
         <hr>
         <div class="box">
             <h1>History</h1>
-            <hr>
-                {% for expense in expenses %}
+
+            {% for expense in expenses %}
+                <hr>
                 <article class="media content-section">
-                  <div class="media-body">
-                    <div class="article-metadata">
-                      {% comment %} <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a> {% endcomment %}
-                      <div class="h4 mb-0 mt-2"> Amount: 
-                      <a class="mr-4" href= "#">{{ expense.Amount }}</a>
-                      </div>
-                      <small class="h6 text-muted mb-3">{{ expense.ExpenseDate|date:"F d, Y" }}</small>
-                    </div>
-                    <hr>
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            {% comment %} <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a> {% endcomment %}
+                            <div class="h4 mb-0 mt-2"> Amount: 
+                                <a class="mr-4" href= "#">{{ expense.Amount }} </a>
+                            </div>
+                            <small class="h6 text-muted mb-3">{{ expense.ExpenseDate|date:"F d, Y" }}</small>
+                        </div>
                     {% comment %} <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
                     <p class="article-content">{{ post.content }}</p> {% endcomment %}
-                  </div>
+                    {% comment %} <button type="button" class="btn btn-primary"> {% endcomment %}
+                        <button type="button" class="delete-button">
+                            <a href="{% url "updateExpense" expense.Expense_id %}" class="ml-2">Edit</a>
+                        </button>
+                        <button type="button" class="delete-button">
+                            <a href="{% url "deleteExp" expense.Expense_id  %}" class="ml-2">Delete</a>
+                        </button>
+                    {% comment %} </button> {% endcomment %}
+                    </div>
                 </article>
-                {% endfor %}
+            {% endfor %}
+            <hr>
+            <br/>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <div class="page-item">
+                        {% if expenses.has_previous %}
+                            <a class="page-link" href="?page=1">&laquo First</a>
+                            <a class="page-link" href="?page={{ expenses.previous_page_number }}">Previous</a>
+                        {% endif %}
+                        
+                        <!--
+                        <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
+                        -->
+                        
+                        {% for i in paginator.num_pages %}
+                            <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                        {% endfor %}
+                        
+                        {% if expenses.has_next %}
+                            <a class="page-link" href="?page={{ expenses.next_page_number }}">Next</a>
+                            <a class="page-link" href="?page={{ expenses.paginator.num_pages }}">Last &raquo</a>
+                        {% endif %}
+                    </div>
+                </ul>
+            </nav>
+            <br/>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
         {% comment %} <script type="text/javascript" src="../../static/manager/expenseGraph.js"></script> {% endcomment %}

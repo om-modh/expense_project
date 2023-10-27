@@ -6,6 +6,7 @@ from .models import Expense, Income
 from django.views.generic import ListView, DetailView
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
+from django.views import View
 
 @login_required
 def home(request):
@@ -101,4 +102,13 @@ def expense(request):
     }
     return render(request, 'manager/expense.html', context)
 
+def DeleteExp(request, id):
+    print(id)
+    get_id = Expense.objects.get(Expense_id = id)
+    get_id.delete()
+    return redirect('manager-expense') 
+    
+def UpdateExpense(request, id):
+    print(id)
+    return redirect('manager-expense')
 
