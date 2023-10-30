@@ -11,22 +11,56 @@
         <div class="box">
             <h1>History</h1>
             <hr>
-                {% for income in incomes %}
+            {% for income in incomes %}
                 <article class="media content-section">
                   <div class="media-body">
                     <div class="article-metadata">
                       {% comment %} <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a> {% endcomment %}
                       <div class="h4 mb-0 mt-2"> Amount: 
-                      <a class="mr-4" href= "#">{{ income.Amount }}</a>
+                        <a class="mr-4" href= "#">{{ income.Amount }}</a>
                       </div>
                       <small class="h6 text-muted mb-3">{{ income.IncomeDate|date:"F d, Y" }}</small>
                     </div>
-                    <hr>
                     {% comment %} <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
                     <p class="article-content">{{ post.content }}</p> {% endcomment %}
-                  </div>
+                    <a class="inside-button" href="{% url "updateIncome" income.Income_id %}">
+                        <button type="button" class="edit-button">Edit</button>
+                    </a>
+                    <a class="inside-button" href="{% url "deleteIncome" income.Income_id  %}" class="ml-2">
+                        <button type="button" class="delete-button">Delete</button>
+                    </a>
+                    <hr>
+                </div>
                 </article>
             {% endfor %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <div class="page-item">
+                        {% if incomes.has_previous %}
+                            <a  href="?page=1"><button class="page-link">&laquo First</button></a>
+                            <a href="?page={{ incomes.previous_page_number }}"><button class="page-link">Previous</button></a>
+                        {% else %}
+                            <button class="page-link fade">&laquo First</button>
+                            <button class="page-link fade">Previous</button>
+                        {% endif %}
+                        <!--
+                        <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
+                        -->
+                        
+                        {% for i in paginator.num_pages %}
+                            <a href="?page={{ forloop.counter }}"><button class="page-link">{{ forloop.counter }}</button></a>
+                        {% endfor %}
+                        
+                        {% if incomes.has_next %}
+                            <a href="?page={{ incomes.next_page_number }}"><button class="page-link">Next</button></a>
+                            <a href="?page={{ incomes.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
+                        {% else %}
+                            <button class="page-link">Next</button>
+                            <button class="page-link">Last &raquo</button>
+                        {% endif %}
+                    </div>
+                </ul>
+            </nav>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
         {% comment %} <script type="text/javascript" src="../../static/manager/expenseGraph.js"></script> {% endcomment %}
@@ -61,11 +95,12 @@
                 document.getElementById('myIncomeChart'),
                 config
             );
-
+    
             {% comment %} function filterData(){
                 const dates2 = [...dates];
                 console.log(dates2);
                 const startdate = document.getElementById('startdate')
+                console.log(startdate.value)
                 const enddate = document.getElementById('enddate')
                 const indexstartdate = dates2.indexOf(startdate.value);
                 const indexenddate = dates2.indexOf(enddate.value);
@@ -74,16 +109,16 @@
                 const filterDate = dates2.slice(dates2.indexOf(startdate.value), dates2.indexOf(enddate.value)+1);
                 console.log(filterDate);
             } {% endcomment %}
-
-        </script>                       
+    
+        </script>                    
     </div>
     <div class="col-4">
         {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} justify-content-center">
-            {{ message }}
-        </div>
-        {% endfor %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} justify-content-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endif %}
         <div class="data-section">
             <form method="post">

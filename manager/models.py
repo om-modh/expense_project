@@ -53,7 +53,7 @@ class Expense(models.Model):
     ExpenseNote = models.TextField(blank=True)
     CreatedAt = models.DateTimeField(auto_now_add=True)  # Use auto_now_add for creation timestamp
     UpdatedAt = models.DateTimeField(auto_now=True)
-    DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
+    DeletedAt = models.DateTimeField(null=True, blank=True, default=None)  # Allow DeletedAt to be null
 
     def soft_delete(self):
         self.DeletedAt = timezone.now()

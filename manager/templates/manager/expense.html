@@ -12,7 +12,7 @@
             <h1>History</h1>
 
             {% for expense in expenses %}
-                <hr>
+            <hr>
                 <article class="media content-section">
                     <div class="media-body">
                         <div class="article-metadata">
@@ -25,12 +25,12 @@
                     {% comment %} <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
                     <p class="article-content">{{ post.content }}</p> {% endcomment %}
                     {% comment %} <button type="button" class="btn btn-primary"> {% endcomment %}
-                        <button type="button" class="delete-button">
-                            <a href="{% url "updateExpense" expense.Expense_id %}" class="ml-2">Edit</a>
-                        </button>
-                        <button type="button" class="delete-button">
-                            <a href="{% url "deleteExp" expense.Expense_id  %}" class="ml-2">Delete</a>
-                        </button>
+                        <a href="{% url "updateExpense" expense.Expense_id %}">
+                            <button type="button" class="edit-button">Edit</button>
+                        </a>
+                        <a href="{% url "deleteExpense" expense.Expense_id  %}" class="ml-2">
+                            <button type="button" class="delete-button">Delete</button>
+                        </a>
                     {% comment %} </button> {% endcomment %}
                     </div>
                 </article>
@@ -41,21 +41,26 @@
                 <ul class="pagination justify-content-center">
                     <div class="page-item">
                         {% if expenses.has_previous %}
-                            <a class="page-link" href="?page=1">&laquo First</a>
-                            <a class="page-link" href="?page={{ expenses.previous_page_number }}">Previous</a>
+                            <a  href="?page=1"><button class="page-link">&laquo First</button></a>
+                            <a href="?page={{ expenses.previous_page_number }}"><button class="page-link">Previous</button></a>
+                        {% else %}
+                            <button class="page-link fade">&laquo First</button>
+                            <button class="page-link fade">Previous</button>
                         {% endif %}
-                        
                         <!--
                         <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
                         -->
                         
                         {% for i in paginator.num_pages %}
-                            <a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                            <a href="?page={{ forloop.counter }}"><button class="page-link">{{ forloop.counter }}</button></a>
                         {% endfor %}
                         
                         {% if expenses.has_next %}
-                            <a class="page-link" href="?page={{ expenses.next_page_number }}">Next</a>
-                            <a class="page-link" href="?page={{ expenses.paginator.num_pages }}">Last &raquo</a>
+                            <a href="?page={{ expenses.next_page_number }}"><button class="page-link">Next</button></a>
+                            <a href="?page={{ expenses.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
+                        {% else %}
+                            <button class="page-link">Next</button>
+                            <button class="page-link">Last &raquo</button>
                         {% endif %}
                     </div>
                 </ul>
