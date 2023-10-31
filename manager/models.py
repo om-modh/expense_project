@@ -52,7 +52,7 @@ class Expense(models.Model):
     ExpenseCatId = models.IntegerField()  # Use the appropriate field type (ForeignKey or IntegerField)
     ExpenseNote = models.TextField(blank=True)
     CreatedAt = models.DateTimeField(auto_now_add=True)  # Use auto_now_add for creation timestamp
-    UpdatedAt = models.DateTimeField(auto_now=True)
+    UpdatedAt = models.DateTimeField(null=True, default=None)
     DeletedAt = models.DateTimeField(null=True, blank=True, default=None)  # Allow DeletedAt to be null
 
     def soft_delete(self):

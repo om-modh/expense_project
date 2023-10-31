@@ -15,14 +15,11 @@
                 <article class="media content-section">
                   <div class="media-body">
                     <div class="article-metadata">
-                      {% comment %} <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a> {% endcomment %}
-                      <div class="h4 mb-0 mt-2"> Amount: 
-                        <a class="mr-4" href= "#">{{ income.Amount }}</a>
+                      <div class="h4 mb-0 mt-2"> Amount: {{ income.Amount }}
+                        {% comment %} <a class="mr-4" href= "#">{{ income.Amount }}</a> {% endcomment %}
                       </div>
                       <small class="h6 text-muted mb-3">{{ income.IncomeDate|date:"F d, Y" }}</small>
                     </div>
-                    {% comment %} <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-                    <p class="article-content">{{ post.content }}</p> {% endcomment %}
                     <a class="inside-button" href="{% url "updateIncome" income.Income_id %}">
                         <button type="button" class="edit-button">Edit</button>
                     </a>
@@ -47,7 +44,7 @@
                         <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
                         -->
                         
-                        {% for i in paginator.num_pages %}
+                        {% for i in incomes.num_pages %}
                             <a href="?page={{ forloop.counter }}"><button class="page-link">{{ forloop.counter }}</button></a>
                         {% endfor %}
                         

@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
-from .forms import UserExpenseForm, UserIncomeForm
+from django.shortcuts import render, redirect,  get_object_or_404
+from .forms import UserExpenseForm, UserIncomeForm, UpdateExpenseForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
 from django.utils import timezone
 from django.core.paginator import Paginator
-from django.views import View
+
 
 @login_required
 def home(request):
@@ -13,6 +13,7 @@ def home(request):
     return render(request, 'manager/home.html', {'username' : user})
 
 
+#INCOME
 
 @login_required
 def income(request):
@@ -36,6 +37,9 @@ def income(request):
     for date in formatted_dates:
         if date not in unique_formatted_dates:
             unique_formatted_dates.append(date)
+
+
+    print(request)
 
     if request.method == 'POST':
         form = UserIncomeForm(request.POST)
@@ -73,6 +77,7 @@ def UpdateIncome(request, id):
 
 
 
+#EXPENSE
 
 @login_required
 def expense(request):
@@ -121,13 +126,28 @@ def expense(request):
     return render(request, 'manager/expense.html', context)
 
 def DeleteExpense(request, id):
-    print(id)
     delete = Expense.objects.get(Expense_id = id)
     delete.DeletedAt = timezone.now()
     delete.save()
     return redirect('manager-expense') 
     
 def UpdateExpense(request, id):
+    expense = get_object_or_404(Expense, pk=id)
+    
+    if request.method == 'POST':
+        form = UpdateExpenseForm(request.POST, request.FILES, instance = expense)
+        if form.is_valid():
+            expense.Amount = form.cleaned_data['Amount']
+            expense.ExpenseDate = form.cleaned_data['ExpenseDate']
+            expense.ExpenseImage = form.cleaned_data['ExpenseImage']
+            expense.ExpenseCatId = form.cleaned_data['ExpenseCatId']
+            expense.ExpenseNote = form.cleaned_data['ExpenseNote']
+            expense.UpdatedAt = timezone.now()
+            expense.save()
+            return redirect('manager-expense')
 
-    return redirect('manager-expense')
+    else:
+        form = UpdateExpenseForm(instance=expense)
+
+    return render(request, 'manager/updateExpense.html', {'form': form})
 

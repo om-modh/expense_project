@@ -35,7 +35,7 @@ class UserExpenseForm(forms.ModelForm):
         model = Expense
         fields = ['Amount', 'ExpenseDate', 'ExpenseImage', 'ExpenseCatId', 'ExpenseNote']
 
-class UpdateExpenseForm(forms.Form):
+class UpdateExpenseForm(forms.ModelForm):
     EXPENSE_CHOICES= [
     ('1', 'Necessity'),
     ('2', 'Desire'),

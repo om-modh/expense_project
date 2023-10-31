@@ -230,7 +230,7 @@ a.article-title:hover {
     line-height: 1.25 ;
     color: #007bff ;
     background-color: #fff ;
-    border: 1px solid #dee2e6;
+    border: 1px solid #aaaaaa;
     width: 90px;
 }
 
@@ -289,5 +289,17 @@ a.article-title:hover {
 
 .inside-button{
     display: inline-block;
+}
 
+.update-form{
+    margin-top: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 600px;
+    padding: 10px 20px;
+}
+
+.outer-update-form{
+    display: flex;
+    justify-content: center;
 }
