@@ -1,5 +1,81 @@
 {% extends "manager/layout.html" %}
-{% block content %}
-    <h1>Hello, Peter.</h1>
+{% block pages %}
+    <div class="col-6">
+        <div class="pie-box">
+            <h1 class="content-center">Income</h1>
+            <hr height="2px">
+            <canvas id="myIncomePieChart" ></canvas>
+            <br/>
+            <h3 class="content-center">Total Income: 
+                <a href="{% url "manager-income" %}">{{ totalIncome }}</a>
+            </h3>
+            <h3 class="content-center">Average Income:
+                <a href="{% url "manager-income" %}">{{ averageIncome }}</a>
+            </h3>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="pie-box">
+            <h1 class="content-center">Expense</h1>
+            <hr>
+            <canvas id="myExpensePieChart" ></canvas>
+            <br/>
+            <h3 class="content-center">Total Expense: 
+                <a href="{% url "manager-expense" %}">{{ totalExpense }}</a>
+            </h3>
+            <h3 class="content-center">Average Expense:
+                <a href="{% url "manager-expense" %}">{{ averageExpense }}</a>
+            </h3>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var configExpense = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    backgroundColor: [
+                        '#EC6B56', '#FFC154', '#47B39C'
+                    ],
+                    data: {{ sumExpense|safe }},
+                    label: 'Expense'
+                }],
+                labels: {{ labelsExpense|safe }}
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+
+        var configIncome = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    backgroundColor: [
+                        '#EC6B56', '#FFC154', '#47B39C'
+                    ],
+                    data: {{ sumIncome|safe }},
+                    label: 'Expense'
+                }],
+                labels: {{ labelsIncome|safe }}
+            },
+            options: {
+                responsive: true
+            }
+        };
     
-{% endblock content %}
+
+        window.onload = function() {
+            var ctx = document.getElementById('myExpensePieChart').getContext('2d');
+            window.myPie = new Chart(ctx, configExpense);
+            
+            var ctx = document.getElementById('myIncomePieChart').getContext('2d');
+            window.myPie = new Chart(ctx, configIncome);
+        };
+    </script>         
+{% endblock pages %}

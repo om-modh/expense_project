@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,  get_object_or_404
-from .forms import UserExpenseForm, UserIncomeForm, UpdateExpenseForm
+from .forms import UserExpenseForm, UserIncomeForm, UpdateExpenseForm, UpdateIncomeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
@@ -10,7 +10,53 @@ from django.core.paginator import Paginator
 @login_required
 def home(request):
     user = request.user
-    return render(request, 'manager/home.html', {'username' : user})
+
+    labelsExpense = ["Necessity", "Desire", "Investment"]
+    sumExpense = [0, 0, 0]
+    totalExpense = 0
+    expenseQuerySet = Expense.objects.filter(User_id = user, DeletedAt = None)
+    nExpense = len(expenseQuerySet)
+    for query in expenseQuerySet:
+        totalExpense += query.Amount
+        if query.ExpenseCatId == 1:
+            sumExpense[0] = sumExpense[0] + query.Amount
+        elif query.ExpenseCatId == 2:
+            sumExpense[1] = sumExpense[1] + query.Amount
+        else:
+            sumExpense[2] = sumExpense[2] + query.Amount
+
+    averageExpense = totalExpense/nExpense
+
+
+    labelsIncome = ["Salary", "Cash", "Divident"]
+    sumIncome = [0, 0, 0]
+    totalIncome = 0
+    incomeQuerySet = Income.objects.filter(User_id = user, DeletedAt = None)
+    nIncome = len(incomeQuerySet)
+    for query in incomeQuerySet:
+        totalIncome += query.Amount
+        if query.IncomeCatId == 1:
+            sumIncome[0] = sumIncome[0] + query.Amount
+        elif query.IncomeCatId == 2:
+            sumIncome[1] = sumIncome[1] + query.Amount
+        else:
+            sumIncome[2] = sumIncome[2] + query.Amount
+
+    averageIncome = totalIncome/nIncome
+
+
+    context = { 
+        'username': user,
+        'labelsExpense' : labelsExpense,
+        'sumExpense' : sumExpense,
+        'totalExpense' : totalExpense,
+        'averageExpense': round(averageExpense, 2),
+        'labelsIncome' : labelsIncome,
+        'sumIncome' : sumIncome,
+        'totalIncome' : totalIncome,
+        'averageIncome' : round(averageIncome, 2), 
+    }
+    return render(request, 'manager/home.html', context)
 
 
 #INCOME
@@ -37,9 +83,6 @@ def income(request):
     for date in formatted_dates:
         if date not in unique_formatted_dates:
             unique_formatted_dates.append(date)
-
-
-    print(request)
 
     if request.method == 'POST':
         form = UserIncomeForm(request.POST)
@@ -71,8 +114,24 @@ def DeleteIncome(request, id):
     return redirect('manager-income')
 
 def UpdateIncome(request, id):
-    print(id)
-    return redirect('manager-income')
+    income = get_object_or_404(Income, pk=id)
+    
+    if request.method == 'POST':
+        form = UpdateIncomeForm(request.POST, request.FILES, instance = income)
+        if form.is_valid():
+            income.Amount = form.cleaned_data['Amount']
+            income.IncomeDate = form.cleaned_data['IncomeDate']
+            income.IncomeImage = form.cleaned_data['IncomeImage']
+            income.IncomeCatId = form.cleaned_data['IncomeCatId']
+            income.IncomeNote = form.cleaned_data['IncomeNote']
+            income.UpdatedAt = timezone.now()
+            income.save()
+            return redirect('manager-income')
+
+    else:
+        form = UpdateIncomeForm(instance=income)
+
+    return render(request, 'manager/updateIncome.html', {'form': form})
 
 
 

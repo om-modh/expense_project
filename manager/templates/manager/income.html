@@ -1,6 +1,6 @@
 {% extends "manager/layout.html" %}
 {% load crispy_forms_tags %}
-{% block form %}
+{% block pages %}
     <div class="col-8">
         <div class="chartBox">
             <canvas id="myIncomeChart" width="300" height="175"></canvas>
@@ -10,26 +10,30 @@
         <hr>
         <div class="box">
             <h1>History</h1>
-            <hr>
             {% for income in incomes %}
+            <hr>
                 <article class="media content-section">
                   <div class="media-body">
                     <div class="article-metadata">
-                      <div class="h4 mb-0 mt-2"> Amount: {{ income.Amount }}
-                        {% comment %} <a class="mr-4" href= "#">{{ income.Amount }}</a> {% endcomment %}
-                      </div>
-                      <small class="h6 text-muted mb-3">{{ income.IncomeDate|date:"F d, Y" }}</small>
-                    </div>
-                    <a class="inside-button" href="{% url "updateIncome" income.Income_id %}">
-                        <button type="button" class="edit-button">Edit</button>
-                    </a>
-                    <a class="inside-button" href="{% url "deleteIncome" income.Income_id  %}" class="ml-2">
-                        <button type="button" class="delete-button">Delete</button>
-                    </a>
-                    <hr>
+                        <div class= "left-buttons">
+                            <div>
+                                <div class="h4 mb-0 mt-0"> Amount: {{ income.Amount }}</div>
+                                <small class="h6 text-muted mb-3">{{ income.IncomeDate|date:"F d, Y" }}</small>
+                            </div>
+                            <div>
+                                <a class="inside-button mr-0" href="{% url "updateIncome" income.Income_id %}">
+                                    <button type="button" class="edit-button">Edit</button>
+                                </a>
+                                <a class="inside-button mr-0" href="{% url "deleteIncome" income.Income_id %}" class="ml-2">
+                                    <button type="button" class="delete-button">Delete</button>
+                                </a>
+                            </div>
+                           </div>
                 </div>
                 </article>
             {% endfor %}
+            <hr>
+            <br/>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <div class="page-item">
@@ -60,7 +64,6 @@
             </nav>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-        {% comment %} <script type="text/javascript" src="../../static/manager/expenseGraph.js"></script> {% endcomment %}
         <script>
             // setup 
             const dates = {{ labels|safe }};
@@ -130,4 +133,4 @@
             </form>
         </div>
     </div>
-{% endblock form %}
+{% endblock pages %}

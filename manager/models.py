@@ -30,8 +30,8 @@ class Income(models.Model):
     IncomeImage = models.ImageField(upload_to='static/manager/income_pics/', blank=True, null=True)
     IncomeCatId = models.IntegerField()
     IncomeNote = models.TextField(blank=True)
-    CreatedAt = models.DateTimeField(auto_now=True)
-    UpdatedAt = models.DateTimeField(auto_now=True)
+    CreatedAt = models.DateTimeField(auto_now_add=True)
+    UpdatedAt = models.DateTimeField(null=True, default=None)
     DeletedAt = models.DateTimeField(null=True, blank=True)  # Allow DeletedAt to be null
 
     def soft_delete(self):
