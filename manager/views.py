@@ -59,7 +59,7 @@ def home(request):
     return render(request, 'manager/home.html', context)
 
 
-#INCOME
+#INCOME---------------------------------------------------------------------------------------------------------------------
 
 @login_required
 def income(request):
@@ -69,10 +69,8 @@ def income(request):
     queryset = Income.objects.filter(User_id = user, DeletedAt = None).order_by('IncomeDate')
 
     for query in queryset:
-        formatted_date = query.IncomeDate.strftime("%d-%m-%Y")
-        formatted_dates.append(formatted_date)
-        amount = query.Amount
-        money.append(amount)
+        formatted_dates.append(query.IncomeDate.strftime("%d-%m-%Y"))
+        money.append(query.Amount)
 
     for i in range(len(formatted_dates)-2, -1, -1):
         if formatted_dates[i] == formatted_dates[i+1]:
@@ -94,7 +92,7 @@ def income(request):
     else:
         form = UserIncomeForm()
 
-    p = Paginator(Income.objects.filter(DeletedAt = None).order_by('-IncomeDate'), 5)
+    p = Paginator(Income.objects.filter(User_id = user, DeletedAt = None).order_by('-IncomeDate'), 5)
     page = request.GET.get('page')
     incomes = p.get_page(page)
 
@@ -107,12 +105,14 @@ def income(request):
     }
     return render(request, 'manager/income.html', context)
 
+@login_required
 def DeleteIncome(request, id):
     delete = Income.objects.get(Income_id = id)
     delete.DeletedAt = timezone.now()
     delete.save()
     return redirect('manager-income')
 
+@login_required
 def UpdateIncome(request, id):
     income = get_object_or_404(Income, pk=id)
     
@@ -136,30 +136,41 @@ def UpdateIncome(request, id):
 
 
 
-#EXPENSE
+#EXPENSE---------------------------------------------------------------------------------------------------------------------
 
 @login_required
 def expense(request):
     formatted_dates = []
     money = []
+    monthsQuery = []
     user = request.user
     queryset = Expense.objects.filter(User_id = user, DeletedAt = None).order_by('ExpenseDate')
 
     for query in queryset:
-        formatted_date = query.ExpenseDate.strftime("%d-%m-%Y")
-        formatted_dates.append(formatted_date)
-        amount = query.Amount
-        money.append(amount)
+        formatted_dates.append(query.ExpenseDate.strftime("%d-%m-%Y"))
+        monthsQuery.append(query.ExpenseDate.strftime("%m"))
+        money.append(query.Amount)
 
     for i in range(len(formatted_dates)-2, -1, -1):
         if formatted_dates[i] == formatted_dates[i+1]:
             money[i] = money[i] + money[i+1]
             del money[i+1]
 
+    months = [0]*31
+    unique_months = []
     unique_formatted_dates = []
+    i = 0
     for date in formatted_dates:
         if date not in unique_formatted_dates:
             unique_formatted_dates.append(date)
+            unique_months.append(monthsQuery[i]) 
+        i+=1
+    for k in range(len(unique_formatted_dates)-1):
+        if(unique_months[k] == "10"):
+            print(k, int(unique_formatted_dates[k][0:2:1]))
+            months[int(unique_formatted_dates[k][0:2:1])-1] = money[k]
+
+
 
     if request.method == 'POST':
         form = UserExpenseForm(request.POST)
@@ -178,18 +189,20 @@ def expense(request):
     context = {
         'username' : user,
         'labels': unique_formatted_dates,
-        'money' : money,
+        'money' : months,
         'form' : form,
         'expenses' : expenses,
     }
     return render(request, 'manager/expense.html', context)
 
+@login_required
 def DeleteExpense(request, id):
     delete = Expense.objects.get(Expense_id = id)
     delete.DeletedAt = timezone.now()
     delete.save()
     return redirect('manager-expense') 
     
+@login_required
 def UpdateExpense(request, id):
     expense = get_object_or_404(Expense, pk=id)
     
@@ -204,7 +217,7 @@ def UpdateExpense(request, id):
             expense.UpdatedAt = timezone.now()
             expense.save()
             return redirect('manager-expense')
-
+        
     else:
         form = UpdateExpenseForm(instance=expense)
 

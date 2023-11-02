@@ -37,80 +37,39 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <div class="page-item">
-                        {% if incomes.has_previous %}
-                            <a  href="?page=1"><button class="page-link">&laquo First</button></a>
-                            <a href="?page={{ incomes.previous_page_number }}"><button class="page-link">Previous</button></a>
+                        {% if incomes.has_previous or incomes.has_next %}
+                            {% if incomes.has_previous %}
+                                <a  href="?page=1"><button class="page-link">&laquo First</button></a>
+                                <a href="?page={{ incomes.previous_page_number }}"><button class="page-link">Previous</button></a>
+                            {% else %}
+                                <button class="page-link fade">&laquo First</button>
+                                <button class="page-link fade">Previous</button>
+                            {% endif %}
+                            <!--
+                            <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
+                            -->
+                            
+                            {% for i in incomes.num_pages %}
+                                <a href="?page={{ forloop.counter }}"><button class="page-link">{{ forloop.counter }}</button></a>
+                            {% endfor %}
+                            
+                            {% if incomes.has_next %}
+                                <a href="?page={{ incomes.next_page_number }}"><button class="page-link">Next</button></a>
+                                <a href="?page={{ incomes.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
+                            {% else %}
+                                <button class="page-link fade">Next</button>
+                                <button class="page-link fade">Last &raquo</button>
+                            {% endif %}
                         {% else %}
                             <button class="page-link fade">&laquo First</button>
                             <button class="page-link fade">Previous</button>
-                        {% endif %}
-                        <!--
-                        <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
-                        -->
-                        
-                        {% for i in incomes.num_pages %}
-                            <a href="?page={{ forloop.counter }}"><button class="page-link">{{ forloop.counter }}</button></a>
-                        {% endfor %}
-                        
-                        {% if incomes.has_next %}
-                            <a href="?page={{ incomes.next_page_number }}"><button class="page-link">Next</button></a>
-                            <a href="?page={{ incomes.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
-                        {% else %}
-                            <button class="page-link">Next</button>
-                            <button class="page-link">Last &raquo</button>
+                            <button class="page-link fade">Next</button>
+                            <button class="page-link fade">Last &raquo</button>
                         {% endif %}
                     </div>
                 </ul>
             </nav>
         </div>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-        <script>
-            // setup 
-            const dates = {{ labels|safe }};
-            const amount = {{ money|safe }};
-            const data = {
-                labels: dates,
-                datasets: [{
-                    label: 'Income',
-                    data: amount,
-                    borderWidth: 1
-                }]
-            };
-            
-            // config 
-            const config = {
-                type: 'bar',
-                data,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            };
-            
-            // render init block
-            const myChart = new Chart(
-                document.getElementById('myIncomeChart'),
-                config
-            );
-    
-            {% comment %} function filterData(){
-                const dates2 = [...dates];
-                console.log(dates2);
-                const startdate = document.getElementById('startdate')
-                console.log(startdate.value)
-                const enddate = document.getElementById('enddate')
-                const indexstartdate = dates2.indexOf(startdate.value);
-                const indexenddate = dates2.indexOf(enddate.value);
-                console.log(indexstartdate)
-                console.log(indexenddate)
-                const filterDate = dates2.slice(dates2.indexOf(startdate.value), dates2.indexOf(enddate.value)+1);
-                console.log(filterDate);
-            } {% endcomment %}
-    
-        </script>                    
     </div>
     <div class="col-4">
         {% if messages %}
@@ -133,4 +92,59 @@
             </form>
         </div>
     </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script>
+        // setup 
+        const dates = {{ labels|safe }};
+        const amount = {{ money|safe }};
+        const data = {
+            labels: dates,
+            datasets: [{
+                label: 'Income',
+                data: amount,
+                backgroundColor: 'rgba(144, 168, 190, 0.5)',
+                borderColor: '#5f788a',
+                borderWidth: 1
+            }]
+        };
+        
+        // config 
+        const config = {
+            type: 'bar',
+            data,
+            options: {
+                scales: {
+                    x: {
+                        grid: {
+                            display : false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+        
+        // render init block
+        const myChart = new Chart(
+            document.getElementById('myIncomeChart'),
+            config
+        );
+
+        {% comment %} function filterData(){
+            const dates2 = [...dates];
+            console.log(dates2);
+            const startdate = document.getElementById('startdate')
+            console.log(startdate.value)
+            const enddate = document.getElementById('enddate')
+            const indexstartdate = dates2.indexOf(startdate.value);
+            const indexenddate = dates2.indexOf(enddate.value);
+            console.log(indexstartdate)
+            console.log(indexenddate)
+            const filterDate = dates2.slice(dates2.indexOf(startdate.value), dates2.indexOf(enddate.value)+1);
+            console.log(filterDate);
+        } {% endcomment %}
+
+    </script>                    
 {% endblock pages %}

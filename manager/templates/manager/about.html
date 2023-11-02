@@ -1,0 +1,37 @@
+{% extends "manager/layout.html" %}
+{% block pages %}
+<h1>Monthly Graph for {{ month }}</h1>
+<canvas id="monthlyChart"></canvas>
+<button id="prevMonth">Previous Month</button>
+<button id="nextMonth">Next Month</button>
+<script>
+    var ctx = document.getElementById('monthlyChart').getContext('2d');
+    var data = JSON.parse('{{ data|safe }}');
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Monthly Data',
+                data: data.values,
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+
+    // Add event listeners to the "Previous" and "Next" buttons
+    document.getElementById('prevMonth').addEventListener('click', function () {
+        // Load data for the previous month and update the chart
+    });
+
+    document.getElementById('nextMonth').addEventListener('click', function () {
+        // Load data for the next month and update the chart
+    });
+</script>
+{% endblock pages%}
