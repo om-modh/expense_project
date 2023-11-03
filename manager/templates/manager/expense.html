@@ -23,11 +23,13 @@
                                 <small class="h6 text-muted mb-3">{{ expense.ExpenseDate|date:"F d, Y" }}</small>
                             </div>
                             <div>
+                                {% comment %} EDIT ICON {% endcomment %}
                                 <a class="inside-button mr-0" href="{% url "updateExpense" expense.Expense_id %}">
-                                    <button type="button" class="edit-button">Edit</button>
+                                    <i class="fa fa-pencil-square-o" style="font-size: 35px;" aria-hidden="true"></i>
                                 </a>
+                                {% comment %} DELETE ICON {% endcomment %}
                                 <a class="inside-button mr-0" href="{% url "deleteExpense" expense.Expense_id %}" class="ml-2">
-                                    <button type="button" class="delete-button">Delete</button>
+                                    <i class="fa fa-trash-o" style="font-size: 35px;" aria-hidden="true"></i>
                                 </a>
                             </div>
                            </div>
@@ -38,7 +40,7 @@
             <hr>
             <br/>
             <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
+                {% comment %} <ul class="pagination justify-content-center"> {% endcomment %}
                     <div class="page-item">
                         {% if expenses.has_previous or expenses.has_next  %}
                             {% if expenses.has_previous %}
@@ -55,7 +57,7 @@
                             {% for expense in paginator.num_pages %}
                                 <a href="?page={{ expense.counter }}"><button class="page-link">{{ expense.counter }}</button></a>
                             {% endfor %}
-                            
+
                             {% if expenses.has_next %}
                                 <a href="?page={{ expenses.next_page_number }}"><button class="page-link">Next</button></a>
                                 <a href="?page={{ expenses.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
@@ -63,6 +65,7 @@
                                 <button class="page-link fade">Next</button>
                                 <button class="page-link fade">Last &raquo</button>
                             {% endif %}
+
                         {% else %}
                             <button class="page-link fade">&laquo First</button>
                             <button class="page-link fade">Previous</button>

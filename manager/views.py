@@ -63,24 +63,44 @@ def home(request):
 
 @login_required
 def income(request):
-    formatted_dates = []
-    money = []
+
+    datesQuery = []
+    amountQuery = []
+    amountDaily = [0]*31
+    key = 0
+    graphDates = []
+    for i in range(1, 32):
+        graphDates.append(i)
+
+
     user = request.user
-    queryset = Income.objects.filter(User_id = user, DeletedAt = None).order_by('IncomeDate')
+    queryset = Income.objects.filter(User_id = user, DeletedAt = None, IncomeDate__month="10").order_by('IncomeDate')
 
     for query in queryset:
-        formatted_dates.append(query.IncomeDate.strftime("%d-%m-%Y"))
-        money.append(query.Amount)
+        datesQuery.append(query.IncomeDate.strftime("%d"))
+        amountQuery.append(query.Amount)
 
-    for i in range(len(formatted_dates)-2, -1, -1):
-        if formatted_dates[i] == formatted_dates[i+1]:
-            money[i] = money[i] + money[i+1]
-            del money[i+1]
+    key = len(datesQuery)-2
+    while key>=0:
+        if datesQuery[key] == datesQuery[key+1]:
+            amountQuery[key] = amountQuery[key] + amountQuery[key+1]
+            del amountQuery[key+1]
+            del datesQuery[key+1]
+        key-=1
 
-    unique_formatted_dates = []
-    for date in formatted_dates:
-        if date not in unique_formatted_dates:
-            unique_formatted_dates.append(date)
+    print(datesQuery)
+    print(amountDaily)
+
+    key = 1
+    k = 0
+    while key<32:
+        if k==len(datesQuery):
+            break
+        if(key==int(datesQuery[k])):
+            amountDaily[int(datesQuery[k])-1] = amountQuery[k]
+            k+=1
+        key+=1
+
 
     if request.method == 'POST':
         form = UserIncomeForm(request.POST)
@@ -98,8 +118,8 @@ def income(request):
 
     context = {
         'username' : user,
-        'labels' : unique_formatted_dates,
-        'money' : money,
+        'labels' : graphDates,
+        'money' : amountDaily,
         'form' : form,
         'incomes' : incomes,
     }
@@ -140,36 +160,43 @@ def UpdateIncome(request, id):
 
 @login_required
 def expense(request):
-    formatted_dates = []
-    money = []
-    monthsQuery = []
+
+    # Variables, list, integers.
+    datesQuery = []
+    amountQuery = []
+    amountDaily = [0]*31
+    key = 0
+    graphDates = []
+    for i in range(1, 32):
+        graphDates.append(i)
+
+
+    # User, Query
     user = request.user
-    queryset = Expense.objects.filter(User_id = user, DeletedAt = None).order_by('ExpenseDate')
+    queryset = Expense.objects.filter(User_id = user, DeletedAt = None, ExpenseDate__month='10').order_by('ExpenseDate')
 
     for query in queryset:
-        formatted_dates.append(query.ExpenseDate.strftime("%d-%m-%Y"))
-        monthsQuery.append(query.ExpenseDate.strftime("%m"))
-        money.append(query.Amount)
+        datesQuery.append(query.ExpenseDate.strftime("%d"))
+        amountQuery.append(query.Amount)
 
-    for i in range(len(formatted_dates)-2, -1, -1):
-        if formatted_dates[i] == formatted_dates[i+1]:
-            money[i] = money[i] + money[i+1]
-            del money[i+1]
 
-    months = [0]*31
-    unique_months = []
-    unique_formatted_dates = []
-    i = 0
-    for date in formatted_dates:
-        if date not in unique_formatted_dates:
-            unique_formatted_dates.append(date)
-            unique_months.append(monthsQuery[i]) 
-        i+=1
-    for k in range(len(unique_formatted_dates)-1):
-        if(unique_months[k] == "10"):
-            print(k, int(unique_formatted_dates[k][0:2:1]))
-            months[int(unique_formatted_dates[k][0:2:1])-1] = money[k]
+    key = len(datesQuery)-2
+    while key>=0:
+        if datesQuery[key] == datesQuery[key+1]:
+            amountQuery[key] = amountQuery[key] + amountQuery[key+1]
+            del amountQuery[key+1]
+            del datesQuery[key+1]
+        key-=1
 
+
+    key = 1
+    k = 0
+    while key<32:
+        print(datesQuery[k])
+        if(key==int(datesQuery[k])):
+            amountDaily[int(datesQuery[k])-1] = amountQuery[k]
+            k+=1
+        key+=1
 
 
     if request.method == 'POST':
@@ -188,8 +215,8 @@ def expense(request):
 
     context = {
         'username' : user,
-        'labels': unique_formatted_dates,
-        'money' : months,
+        'labels': graphDates,
+        'money' : amountDaily,
         'form' : form,
         'expenses' : expenses,
     }

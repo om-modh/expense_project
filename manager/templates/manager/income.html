@@ -21,11 +21,13 @@
                                 <small class="h6 text-muted mb-3">{{ income.IncomeDate|date:"F d, Y" }}</small>
                             </div>
                             <div>
-                                <a class="inside-button mr-0" href="{% url "updateIncome" income.Income_id %}">
-                                    <button type="button" class="edit-button">Edit</button>
+                                {% comment %} EDIT ICON {% endcomment %}
+                                <a class="inside-button mr-2 mt-1" href="{% url "updateIncome" income.Income_id %}">
+                                    <i class="fa fa-pencil-square-o" style="font-size: 35px;" aria-hidden="true"></i>
                                 </a>
-                                <a class="inside-button mr-0" href="{% url "deleteIncome" income.Income_id %}" class="ml-2">
-                                    <button type="button" class="delete-button">Delete</button>
+                                {% comment %} DELETE ICON {% endcomment %}
+                                <a class="inside-button mr-5" href="{% url "deleteIncome" income.Income_id %}" >
+                                    <i class="fa fa-trash-o" style="font-size: 35px;" aria-hidden="true"></i>
                                 </a>
                             </div>
                            </div>
@@ -33,7 +35,6 @@
                 </article>
             {% endfor %}
             <hr>
-            <br/>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <div class="page-item">
