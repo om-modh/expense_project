@@ -30,45 +30,54 @@
                                     <i class="fa fa-trash-o" style="font-size: 35px;" aria-hidden="true"></i>
                                 </a>
                             </div>
-                           </div>
-                </div>
+                        </div>
+                    </div>
                 </article>
             {% endfor %}
             <hr>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <div class="page-item">
-                        {% if incomes.has_previous or incomes.has_next %}
-                            {% if incomes.has_previous %}
-                                <a  href="?page=1"><button class="page-link">&laquo First</button></a>
-                                <a href="?page={{ incomes.previous_page_number }}"><button class="page-link">Previous</button></a>
-                            {% else %}
-                                <button class="page-link fade">&laquo First</button>
-                                <button class="page-link fade">Previous</button>
-                            {% endif %}
-                            <!--
-                            <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
-                            -->
-                            
-                            {% for i in incomes.num_pages %}
-                                <a href="?page={{ forloop.counter }}"><button class="page-link">{{ forloop.counter }}</button></a>
-                            {% endfor %}
-                            
-                            {% if incomes.has_next %}
-                                <a href="?page={{ incomes.next_page_number }}"><button class="page-link">Next</button></a>
-                                <a href="?page={{ incomes.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
-                            {% else %}
-                                <button class="page-link fade">Next</button>
-                                <button class="page-link fade">Last &raquo</button>
-                            {% endif %}
+            <nav aria-label="Page navigation example" class="mb-1">
+                <div class="page-item content-center">
+                    {% if incomes.has_previous or incomes.has_next %}
+                        {% if incomes.has_previous %}
+                            <a href="?page={{ incomes.previous_page_number }}">
+                                <button class="page-link mr-1">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                </button>
+                            </a>
                         {% else %}
-                            <button class="page-link fade">&laquo First</button>
-                            <button class="page-link fade">Previous</button>
-                            <button class="page-link fade">Next</button>
-                            <button class="page-link fade">Last &raquo</button>
+                            <button class="page-link fade mr-1">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </button>
                         {% endif %}
-                    </div>
-                </ul>
+
+                        {% for page in pages.page_range %}
+                            <a class="mr-1 ml-1 h5" href="?page={{ page }}">
+                                <button class="page-link content-center">
+                                    {{ page }}
+                                </button>
+                            </a>
+                        {% endfor %}
+                        
+                        {% if incomes.has_next %}
+                            <a href="?page={{ incomes.next_page_number }}">
+                                <button class="page-link ml-1">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </a>
+                        {% else %}
+                            <button class="page-link fade ml-1">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <button class="page-link fade mr-1">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </button>
+                        <button class="page-link fade ml-1">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    {% endif %}
+                </div>
             </nav>
         </div>
     </div>

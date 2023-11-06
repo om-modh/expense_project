@@ -3,17 +3,16 @@
 {% block pages %}
     <div class="col-8">
         <div class="chartBox">
-            <canvas id="myExpenseChart" width="300" height="175" ></canvas>
-            {% comment %} <canvas id="monthlyChart"></canvas>
-            <button id="prevMonth">Previous Month</button>
-            <button id="nextMonth">Next Month</button> {% endcomment %}
+            <canvas id="myExpenseChart" width="300" height="175"></canvas>
+            
         </div>
+        
+        
         <hr>
         <div class="box">
             <h1>History</h1>
-
             {% for expense in expenses %}
-            <hr>
+                <hr>
                 <article class="media content-section">
                     <div class="media-body">
                         <div class="article-metadata">
@@ -38,55 +37,69 @@
                 </article>
             {% endfor %}
             <hr>
-            <br/>
-            <nav aria-label="Page navigation example">
-                {% comment %} <ul class="pagination justify-content-center"> {% endcomment %}
-                    <div class="page-item">
+            <nav aria-label="Page navigation example" class="mb-1">
+                <div class="page-item content-center">
                         {% if expenses.has_previous or expenses.has_next  %}
                             {% if expenses.has_previous %}
-                                <a  href="?page=1"><button class="page-link">&laquo First</button></a>
-                                <a href="?page={{ expenses.previous_page_number }}"><button class="page-link">Previous</button></a>
+                                {% comment %} <a  href="?page=1"><button class="page-link">&laquo First</button></a> {% endcomment %}
+                                <a href="?page={{ expenses.previous_page_number }}">
+                                    <button class="page-link mr-1">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    </button>
+                                </a>
                             {% else %}
-                                <button class="page-link fade">&laquo First</button>
-                                <button class="page-link fade">Previous</button>
+                                {% comment %} <button class="page-link fade">&laquo First</button> {% endcomment %}
+                                <button class="page-link fade mr-1 ">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                </button>
                             {% endif %}
-                            <!--
-                            <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
-                            -->
-                            
-                            {% for expense in paginator.num_pages %}
-                                <a href="?page={{ expense.counter }}"><button class="page-link">{{ expense.counter }}</button></a>
+                    
+                            {% for page in pages.page_range %}
+                                <a class="mr-1 ml-1 h5" href="?page={{ page }}">
+                                    <button class="page-link content-center"> 
+                                        {{ page }} 
+                                    </button>
+                                </a>
                             {% endfor %}
 
-                            {% if expenses.has_next %}
-                                <a href="?page={{ expenses.next_page_number }}"><button class="page-link">Next</button></a>
-                                <a href="?page={{ expenses.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a>
-                            {% else %}
-                                <button class="page-link fade">Next</button>
-                                <button class="page-link fade">Last &raquo</button>
-                            {% endif %}
 
+                            {% if expenses.has_next %}
+                                <a href="?page={{ expenses.next_page_number }}">
+                                    <button class="page-link ml-1">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                    </button>
+                                </a>
+                                {% comment %} <a href="?page={{ expenses.paginator.num_pages }}"><button class="page-link">Last &raquo</button></a> {% endcomment %}
+                            {% else %}
+                                <button class="page-link fade ml-1">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                                {% comment %} <button class="page-link fade">Last &raquo</button> {% endcomment %}
+                            {% endif %}
                         {% else %}
-                            <button class="page-link fade">&laquo First</button>
-                            <button class="page-link fade">Previous</button>
-                            <button class="page-link fade">Next</button>
-                            <button class="page-link fade">Last &raquo</button>
+                            {% comment %} <button class="page-link fade">&laquo First</button> {% endcomment %}
+                            <button class="page-link fade mr-1">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </button>
+                            <button class="page-link fade ml-1">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                            {% comment %} <button class="page-link fade">Last &raquo</button> {% endcomment %}
                         {% endif %}
-                    </div>
-                </ul>
+                </div>
             </nav>
-            <br/>
         </div>
     </div>
+
     <div class="col-4">
         <div class="message">
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} justify-content-center">
-                {{ message }}
-                <a href="../" class="del-msg">&times;</a>
-            </div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} justify-content-center">
+                        {{ message }}
+                        <a href="../" class="del-msg">&times;</a>
+                    </div>
+                {% endfor %}
             {% endif %}
         </div>
         <div class="data-section">
@@ -108,6 +121,7 @@
         // setup 
         const dates = {{ labels|safe }};
         const amount = {{ money|safe }};
+        {% comment %} const fullDate = {{ fullDate|safe }} {% endcomment %}
         const data = {
             labels: dates,
             datasets: [{
@@ -128,7 +142,7 @@
                     x: {
                         grid: {
                             display: false
-                          }
+                        }
                     },        
                     y: {
                         
@@ -157,8 +171,7 @@
             const filterDate = dates2.slice(dates2.indexOf(startdate.value), dates2.indexOf(enddate.value)+1);
             console.log(filterDate);
         }
-
-    </script>          
+    </script>
     <script>
         $(document).ready(function() {
             // messages timeout for 10 sec 
@@ -174,48 +187,4 @@
     </script>             
 
 
-
-
-
-
-
-
-
-
-
-
-{% comment %} 
-
-
-    <script>
-        var ctx = document.getElementById('monthlyChart').getContext('2d');
-        var data = JSON.parse('{{ data|safe }}');
-        
-        const dates = {{ labels|safe }};
-        const amount = {{ money|safe }};
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Monthly Data',
-                    data: amount,
-                    borderColor: 'rgb(75, 192, 192)',
-                    borderWidth: 2,
-                }]
-            },
-            options: {
-                responsive: true,
-            }
-        });
-    
-        // Add event listeners to the "Previous" and "Next" buttons
-        document.getElementById('prevMonth').addEventListener('click', function () {
-            // Load data for the previous month and update the chart
-        });
-    
-        document.getElementById('nextMonth').addEventListener('click', function () {
-            // Load data for the next month and update the chart
-        });
-    </script> {% endcomment %}
-    {% endblock pages %}
+{% endblock pages %}

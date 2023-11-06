@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Expense, Income
 from django.utils import timezone
 from django.core.paginator import Paginator
+import datetime
 
 
 @login_required
@@ -88,12 +89,9 @@ def income(request):
             del datesQuery[key+1]
         key-=1
 
-    print(datesQuery)
-    print(amountDaily)
-
     key = 1
     k = 0
-    while key<32:
+    while key<32 and k<len(datesQuery):
         if k==len(datesQuery):
             break
         if(key==int(datesQuery[k])):
@@ -122,6 +120,8 @@ def income(request):
         'money' : amountDaily,
         'form' : form,
         'incomes' : incomes,
+        'pages': p,
+
     }
     return render(request, 'manager/income.html', context)
 
@@ -162,6 +162,8 @@ def UpdateIncome(request, id):
 def expense(request):
 
     # Variables, list, integers.
+    month = request.POST.get('month', '10')
+    fullDate = []
     datesQuery = []
     amountQuery = []
     amountDaily = [0]*31
@@ -171,13 +173,13 @@ def expense(request):
         graphDates.append(i)
 
 
-    # User, Query
+    # User, Query, QuerySet
     user = request.user
-    queryset = Expense.objects.filter(User_id = user, DeletedAt = None, ExpenseDate__month='10').order_by('ExpenseDate')
-
+    queryset = Expense.objects.filter(User_id = user, DeletedAt = None, ExpenseDate__month=month).order_by('ExpenseDate')
     for query in queryset:
         datesQuery.append(query.ExpenseDate.strftime("%d"))
         amountQuery.append(query.Amount)
+        fullDate.append(query.ExpenseDate)
 
 
     key = len(datesQuery)-2
@@ -191,14 +193,20 @@ def expense(request):
 
     key = 1
     k = 0
-    while key<32:
-        print(datesQuery[k])
+    while key<32 and k<len(datesQuery):
         if(key==int(datesQuery[k])):
             amountDaily[int(datesQuery[k])-1] = amountQuery[k]
             k+=1
         key+=1
 
 
+    # History Pagination.
+    p = Paginator(Expense.objects.filter(User_id = user, DeletedAt = None).order_by('-ExpenseDate'), 5)
+    page = request.GET.get('page')
+    expenses = p.get_page(page)
+    print(p.num_pages)
+
+    # API call
     if request.method == 'POST':
         form = UserExpenseForm(request.POST)
         if form.is_valid():
@@ -209,16 +217,14 @@ def expense(request):
     else:
         form = UserExpenseForm()
     
-    p = Paginator(Expense.objects.filter(User_id = user, DeletedAt = None).order_by('-ExpenseDate'), 5)
-    page = request.GET.get('page')
-    expenses = p.get_page(page)
-
     context = {
         'username' : user,
         'labels': graphDates,
         'money' : amountDaily,
         'form' : form,
         'expenses' : expenses,
+        'fullDate' : fullDate,
+        'pages': p,
     }
     return render(request, 'manager/expense.html', context)
 
@@ -250,3 +256,45 @@ def UpdateExpense(request, id):
 
     return render(request, 'manager/updateExpense.html', {'form': form})
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def about(request):
+#     amountQuery = []
+#     fullDateQuery = []
+#     user = request.user
+#     queryset = Expense.objects.filter(User_id = user, DeletedAt = None).order_by('-ExpenseDate')
+#     for query in queryset:
+#         fullDateQuery.append(datetime.strptime(query.ExpenseDate, "%Y-%m-%d")).time()
+#         amountQuery.append(query.Amount)
+    
+#     key = len(fullDateQuery)-2
+#     while key>=0:
+#         if fullDateQuery[key] == fullDateQuery[key+1]:
+#             amountQuery[key] = amountQuery[key] + amountQuery[key+1]
+#             del amountQuery[key+1]
+#             del fullDateQuery[key+1]
+#         key-=1
+
+#     print(len(fullDateQuery))
+#     print(len(amountQuery))
+
+
+#     context = {
+#         'username': user,
+#         'fullDate' : fullDateQuery,
+#         'amount' : amountQuery,
+#     }
+#     return render(request, 'manager/about.html', context)

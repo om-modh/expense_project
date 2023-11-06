@@ -210,11 +210,11 @@ a.article-title:hover {
     display: inline ;
     padding: 0.5rem 0.75rem ; 
     margin-left: 3px ;
-    line-height: 1.25 ;
+    line-height: inherit ;
     color: #007bff ;
     background-color: #fff ;
     border: 1px solid #aaaaaa;
-    width: 90px;
+    width: 40px;
 }
 
 .fade{

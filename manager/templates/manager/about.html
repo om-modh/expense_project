@@ -1,37 +1,41 @@
 {% extends "manager/layout.html" %}
-{% block pages %}
-<h1>Monthly Graph for {{ month }}</h1>
-<canvas id="monthlyChart"></canvas>
-<button id="prevMonth">Previous Month</button>
-<button id="nextMonth">Next Month</button>
-<script>
-    var ctx = document.getElementById('monthlyChart').getContext('2d');
-    var data = JSON.parse('{{ data|safe }}');
+{% block content %}
+<h1>Let's Goooooooooooooooooooooooooooooooooo</h1>
 
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Monthly Data',
-                data: data.values,
-                borderColor: 'rgb(75, 192, 192)',
-                borderWidth: 2,
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
+<h1>Monthly Graph for </h1>
+<div>
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('myChart');
+    const dates = {{ fullDate|safe }};
+    const amount = {{ amount|safe }};
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'ABOUT',
+          data: amount,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+                unit: 'date'
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
         }
+      }
     });
-
-    // Add event listeners to the "Previous" and "Next" buttons
-    document.getElementById('prevMonth').addEventListener('click', function () {
-        // Load data for the previous month and update the chart
-    });
-
-    document.getElementById('nextMonth').addEventListener('click', function () {
-        // Load data for the next month and update the chart
-    });
-</script>
-{% endblock pages%}
+  </script>
+{% endblock content %}

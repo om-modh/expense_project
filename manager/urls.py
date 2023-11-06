@@ -8,5 +8,6 @@ urlpatterns = [
     path('deleteExpense/<int:id>', views.DeleteExpense, name="deleteExpense"),
     path('deleteIncome/<int:id>', views.DeleteIncome, name='deleteIncome'),
     path('updateExpense/<int:id>', views.UpdateExpense, name='updateExpense'),
-    path('updateIncome/<int:id>', views.UpdateIncome, name='updateIncome')
+    path('updateIncome/<int:id>', views.UpdateIncome, name='updateIncome'),
+    # path('about/', views.about, name='about'),
 ]
