@@ -4,7 +4,11 @@
         <div class="pie-box">
             <h1 class="content-center">Income</h1>
             <hr height="2px">
-            <canvas id="myIncomePieChart" ></canvas>
+            {% if totalIncome == 0 %}
+                <i class="fa fa-pie-chart empty-pie justify-content-center fade" aria-hidden="true"></i>
+            {% else %}
+                <canvas id="myIncomePieChart"></canvas>
+            {% endif %}
             <br/>
             <h3 class="content-center">Total Income: 
                 <a href="{% url "manager-income" %}">{{ totalIncome }}</a>
@@ -12,6 +16,7 @@
             <h3 class="content-center">Average Income:
                 <a href="{% url "manager-income" %}">{{ averageIncome }}</a>
             </h3>
+                
         </div>
     </div>
     <div class="col-6">

@@ -12,23 +12,6 @@ import datetime
 def home(request):
     user = request.user
 
-    labelsExpense = ["Necessity", "Desire", "Investment"]
-    sumExpense = [0, 0, 0]
-    totalExpense = 0
-    expenseQuerySet = Expense.objects.filter(User_id = user, DeletedAt = None)
-    nExpense = len(expenseQuerySet)
-    for query in expenseQuerySet:
-        totalExpense += query.Amount
-        if query.ExpenseCatId == 1:
-            sumExpense[0] = sumExpense[0] + query.Amount
-        elif query.ExpenseCatId == 2:
-            sumExpense[1] = sumExpense[1] + query.Amount
-        else:
-            sumExpense[2] = sumExpense[2] + query.Amount
-
-    averageExpense = totalExpense/nExpense
-
-
     labelsIncome = ["Salary", "Cash", "Divident"]
     sumIncome = [0, 0, 0]
     totalIncome = 0
@@ -43,7 +26,30 @@ def home(request):
         else:
             sumIncome[2] = sumIncome[2] + query.Amount
 
-    averageIncome = totalIncome/nIncome
+    try:
+        averageIncome = totalIncome/nIncome
+    except:
+        averageIncome = 0
+
+
+    labelsExpense = ["Necessity", "Desire", "Investment"]
+    sumExpense = [0, 0, 0]
+    totalExpense = 0
+    expenseQuerySet = Expense.objects.filter(User_id = user, DeletedAt = None)
+    nExpense = len(expenseQuerySet)
+    for query in expenseQuerySet:
+        totalExpense += query.Amount
+        if query.ExpenseCatId == 1:
+            sumExpense[0] = sumExpense[0] + query.Amount
+        elif query.ExpenseCatId == 2:
+            sumExpense[1] = sumExpense[1] + query.Amount
+        else:
+            sumExpense[2] = sumExpense[2] + query.Amount
+    
+    try:
+        averageExpense = totalExpense/nExpense
+    except:
+        averageExpense = 0
 
 
     context = { 
@@ -69,13 +75,14 @@ def income(request):
     amountQuery = []
     amountDaily = [0]*31
     key = 0
+    month = request.POST.get('month', '10')
     graphDates = []
     for i in range(1, 32):
         graphDates.append(i)
 
 
     user = request.user
-    queryset = Income.objects.filter(User_id = user, DeletedAt = None, IncomeDate__month="10").order_by('IncomeDate')
+    queryset = Income.objects.filter(User_id = user, DeletedAt = None, IncomeDate__month=month).order_by('IncomeDate')
 
     for query in queryset:
         datesQuery.append(query.IncomeDate.strftime("%d"))

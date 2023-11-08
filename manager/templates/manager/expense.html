@@ -3,11 +3,8 @@
 {% block pages %}
     <div class="col-8">
         <div class="chartBox">
-            <canvas id="myExpenseChart" width="300" height="175"></canvas>
-            
+            <canvas id="myExpenseChart" width="300" height="175"></canvas>  
         </div>
-        
-        
         <hr>
         <div class="box">
             <h1>History</h1>
@@ -21,14 +18,14 @@
                                 <div class="h4 mb-0 mt-0"> Amount: {{ expense.Amount }}</div>
                                 <small class="h6 text-muted mb-3">{{ expense.ExpenseDate|date:"F d, Y" }}</small>
                             </div>
-                            <div>
+                            <div class="icon-align">
                                 {% comment %} EDIT ICON {% endcomment %}
-                                <a class="inside-button mr-0" href="{% url "updateExpense" expense.Expense_id %}">
-                                    <i class="fa fa-pencil-square-o" style="font-size: 35px;" aria-hidden="true"></i>
+                                <a class="inside-button mr-2 mt-1" href="{% url "updateExpense" expense.Expense_id %}">
+                                    <i class="fa fa-pencil-square-o" style="font-size: 38px;" aria-hidden="true"></i>
                                 </a>
                                 {% comment %} DELETE ICON {% endcomment %}
-                                <a class="inside-button mr-0" href="{% url "deleteExpense" expense.Expense_id %}" class="ml-2">
-                                    <i class="fa fa-trash-o" style="font-size: 35px;" aria-hidden="true"></i>
+                                <a class="inside-button mr-3 ml-2" href="{% url "deleteExpense" expense.Expense_id %}">
+                                    <i class="fa fa-trash-o" style="font-size: 38px;" aria-hidden="true"></i>
                                 </a>
                             </div>
                            </div>
@@ -96,8 +93,8 @@
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} justify-content-center">
-                        {{ message }}
-                        <a href="../" class="del-msg">&times;</a>
+                        <div>{{ message }} <a class="close" data-dismiss="alert">×</a></div>
+                        <img src="close.soon" style="display:none;" onerror="(function(el){ setTimeout(function(){ el.parentNode.parentNode.removeChild(el.parentNode); }, 2000); })(this);" />
                     </div>
                 {% endfor %}
             {% endif %}
@@ -116,6 +113,10 @@
         </div>
     </div>
     
+
+
+
+     {% comment %} SCRIPTS  {% endcomment %}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
     <script>
         // setup 
@@ -185,6 +186,19 @@
             })
         });
     </script>             
+    <script>
+        const toastElement = document.getElementById("toast")
+        const toastBody = document.getElementById("toast-body")
+
+        const toast = new bootstrap.Toast(toastElement, { delay: 2000 })
+
+        htmx.on("showMessage", (e) => {
+        toastBody.innerText = e.detail.value
+        toast.show()
+        })
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
 
 {% endblock pages %}

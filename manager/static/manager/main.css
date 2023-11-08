@@ -103,21 +103,21 @@ a.article-title:hover {
 
 .submit-button{
     background-color: white;
-    color: rgb(41, 118, 211);
+    color: #5f788a;
     padding-top: 9px;
     padding-bottom: 9px;
     padding-left: 16px;
     padding-right: 16px;
     border-width: 1px;
     border-style: solid;
-    border-color: rgb(41, 118, 211);
+    border-color: #5f788a;
     border-radius: 2px;
     cursor: pointer;
     transition: background-color 0.7s, color 0.7s;
 }
 
 .submit-button:hover{
-    background-color: rgb(41, 118, 211);
+    background-color: #5f788a;
     color: white;
 }
 
@@ -307,8 +307,18 @@ a.article-title:hover {
 .content-center{
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
+
 .left-buttons {
     display: flex;
     justify-content: space-between;
+}
+
+.icon-align{
+    display: inherit;
+}
+
+.empty-pie{
+    font-size: 250px;
 }
