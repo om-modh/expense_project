@@ -3,9 +3,11 @@
 {% block pages %}
     <div class="col-8">
         <div class="chartBox">
+            {% comment %} {% if income.Amount == none %}
+                <i class="fa fa-bar-chart" style="width="300" height="175""  aria-hidden="true"></i>
+            {% else %} {% endcomment %}
             <canvas id="myIncomeChart" width="300" height="175"></canvas>
-            {% comment %} <input onchange="filterData()" type="date" id="startdate"> 
-            <input onchange="filterData()" type="date" id="enddate">  {% endcomment %}
+            {% comment %} {% endif %} {% endcomment %}
         </div>
         <hr>
         <div class="box">

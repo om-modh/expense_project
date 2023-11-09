@@ -4,11 +4,15 @@
         <div class="pie-box">
             <h1 class="content-center">Income</h1>
             <hr height="2px">
-            {% if totalIncome == 0 %}
-                <i class="fa fa-pie-chart empty-pie justify-content-center fade" aria-hidden="true"></i>
-            {% else %}
-                <canvas id="myIncomePieChart"></canvas>
-            {% endif %}
+            <div class="content-center">
+                {% if totalIncome == 0 %}
+                    <a href = "{% url "manager-income" %}" title="Please click on this to add amount to see graph">
+                        <i class="fa fa-pie-chart empty-pie" style="opacity:.3;" aria-hidden="true"></i>
+                    </a>
+                {% else %}
+                    <canvas id="myIncomePieChart"></canvas>
+                {% endif %}
+            </div>
             <br/>
             <h3 class="content-center">Total Income: 
                 <a href="{% url "manager-income" %}">{{ totalIncome }}</a>
@@ -23,7 +27,15 @@
         <div class="pie-box">
             <h1 class="content-center">Expense</h1>
             <hr>
-            <canvas id="myExpensePieChart" ></canvas>
+            <div class="content-center">
+                {% if totalExpense == 0 %}
+                <a href = "{% url "manager-expense" %} " title="Please click on this to add amount to see graph">
+                    <i class="fa fa-pie-chart empty-pie" style="opacity:.3;" aria-hidden="true"></i>
+                </a>
+                {% else %}
+                    <canvas id="myExpensePieChart"></canvas>
+                {% endif %}
+            </div>
             <br/>
             <h3 class="content-center">Total Expense: 
                 <a href="{% url "manager-expense" %}">{{ totalExpense }}</a>

@@ -321,4 +321,6 @@ a.article-title:hover {
 
 .empty-pie{
     font-size: 250px;
+    width: 250px;
+    color: #5f788a;
 }
