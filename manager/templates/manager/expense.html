@@ -113,7 +113,6 @@
      {% comment %} SCRIPTS  {% endcomment %}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
     <script>
-        // setup 
         const dates = {{ labels|safe }};
         const amount = {{ money|safe }};
         {% comment %} const fullDate = {{ fullDate|safe }} {% endcomment %}
@@ -128,7 +127,6 @@
             }]
         };
         
-        // config 
         const config = {
             type: 'bar',
             data,

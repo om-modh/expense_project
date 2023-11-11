@@ -166,6 +166,7 @@ html, body {
 .alert-message{
     display: flex !important;
     width: 625px !important;
-    justify-content: center;
     position: relative !important;
+    flex-direction: column;
+    justify-content: center !important;
 }

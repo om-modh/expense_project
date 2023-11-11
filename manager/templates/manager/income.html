@@ -3,19 +3,21 @@
 {% block pages %}
     <div class="col-8">
         <div class="chartBox">
-            {% comment %} {% if income.Amount == none %}
-                <i class="fa fa-bar-chart" style="width="300" height="175""  aria-hidden="true"></i>
-            {% else %} {% endcomment %}
-            <canvas id="myIncomeChart" width="300" height="175"></canvas>
-            {% comment %} {% endif %} {% endcomment %}
+            {% if totalIncome == 0 %}
+                <a href = "{% url "manager-income" %}" title="Please click on this to add amount to see graph">
+                    <i class="fa fa-bar-chart empty-pie" style="opacity:.3;" aria-hidden="true"></i>
+                </a>
+            {% else %}
+                <canvas id="myIncomeChart" width="300" height="175"></canvas>
+            {% endif %}
         </div>
         <hr>
         <div class="box">
             <h1>History</h1>
             {% for income in incomes %}
             <hr>
-                <article class="media content-section">
-                  <div class="media-body">
+            <article class="media content-section">
+                <div class="media-body">
                     <div class="article-metadata">
                         <div class= "left-buttons">
                             <div>
@@ -34,7 +36,8 @@
                             </div>
                         </div>
                     </div>
-                </article>
+                </div>
+            </article>
             {% endfor %}
             <hr>
             <nav aria-label="Page navigation example" class="mb-1">

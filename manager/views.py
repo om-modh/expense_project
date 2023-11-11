@@ -128,7 +128,6 @@ def income(request):
         'form' : form,
         'incomes' : incomes,
         'pages': p,
-
     }
     return render(request, 'manager/income.html', context)
 
