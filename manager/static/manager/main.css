@@ -324,3 +324,11 @@ a.article-title:hover {
     width: 250px;
     color: #5f788a;
 }
+
+.empty-bar-chart{
+    display: flex;
+    opacity: 0.6;
+    justify-content: center;
+    font-size: 330px;
+    color: #5f788a;
+}

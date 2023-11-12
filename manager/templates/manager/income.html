@@ -3,12 +3,12 @@
 {% block pages %}
     <div class="col-8">
         <div class="chartBox">
-            {% if totalIncome == 0 %}
-                <a href = "{% url "manager-income" %}" title="Please click on this to add amount to see graph">
-                    <i class="fa fa-bar-chart empty-pie" style="opacity:.3;" aria-hidden="true"></i>
-                </a>
-            {% else %}
+            {% if amountExist %}
                 <canvas id="myIncomeChart" width="300" height="175"></canvas>
+            {% else %}
+                <a href = "{% url "manager-income" %}" title="Please click on this to add amount to see graph">
+                    <i class="fa fa-bar-chart empty-bar-chart" aria-hidden="true"></i>
+                </a>
             {% endif %}
         </div>
         <hr>

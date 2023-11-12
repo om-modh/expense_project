@@ -70,7 +70,7 @@ def home(request):
 
 @login_required
 def income(request):
-
+    amountExist = False
     datesQuery = []
     amountQuery = []
     amountDaily = [0]*31
@@ -79,7 +79,6 @@ def income(request):
     graphDates = []
     for i in range(1, 32):
         graphDates.append(i)
-
 
     user = request.user
     queryset = Income.objects.filter(User_id = user, DeletedAt = None, IncomeDate__month=month).order_by('IncomeDate')
@@ -117,6 +116,9 @@ def income(request):
     else:
         form = UserIncomeForm()
 
+    if(len(amountQuery)>0):
+        amountExist = True
+
     p = Paginator(Income.objects.filter(User_id = user, DeletedAt = None).order_by('-IncomeDate'), 5)
     page = request.GET.get('page')
     incomes = p.get_page(page)
@@ -128,6 +130,7 @@ def income(request):
         'form' : form,
         'incomes' : incomes,
         'pages': p,
+        'amountExist' : amountExist,
     }
     return render(request, 'manager/income.html', context)
 
@@ -169,7 +172,8 @@ def expense(request):
 
     # Variables, list, integers.
     month = request.POST.get('month', '10')
-    fullDate = []
+    fullDate = [] 
+    amountExist = False
     datesQuery = []
     amountQuery = []
     amountDaily = [0]*31
@@ -205,6 +209,8 @@ def expense(request):
             k+=1
         key+=1
 
+    if(len(amountQuery)>0):
+        amountExist = True
 
     # History Pagination.
     p = Paginator(Expense.objects.filter(User_id = user, DeletedAt = None).order_by('-ExpenseDate'), 5)
@@ -231,6 +237,7 @@ def expense(request):
         'expenses' : expenses,
         'fullDate' : fullDate,
         'pages': p,
+        'amountExist' : amountExist,
     }
     return render(request, 'manager/expense.html', context)
 

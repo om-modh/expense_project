@@ -3,7 +3,13 @@
 {% block pages %}
     <div class="col-8">
         <div class="chartBox">
-            <canvas id="myExpenseChart" width="300" height="175"></canvas>  
+            {% if amountExist %}
+                <canvas id="myExpenseChart" width="300" height="175"></canvas>  
+            {% else %}
+                <a href = "{% url "manager-expense" %}" title="Please click on this to add amount to see graph">
+                    <i class="fa fa-bar-chart empty-bar-chart" aria-hidden="true"></i>
+                </a>
+            {% endif %}
         </div>
         <hr>
         <div class="box">
